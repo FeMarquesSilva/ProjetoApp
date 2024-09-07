@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 type Player = "0" | "X"
@@ -60,6 +60,7 @@ const JogoDaVelha = () => {
         return jogadorTurn[index]
     }
 
+
     //Marcação dinâmica de qual posição está sendo clicada;
     const play = (index: number) => {
         setJogada(prev => ({ ...prev, [index]: jogadorTurn }))
@@ -77,14 +78,15 @@ const JogoDaVelha = () => {
             <View>
                 <Text style={styles.playerTurn}>Jogador da vez: {jogadorDaVez()}</Text>
             </View>
-
             <View style={styles.container}>
                 <View style={styles.board}>
                     {tabuleiro().map((_, i) => (
                         <Text style={styles.cell} onPress={() => play(i)}>{jogada[i]}</Text>
                     ))}
                 </View>
+                <Button title="Reiniciar" onPress={reiniciarJogo} />
             </View>
+
         </View>
     );
 }
@@ -93,10 +95,13 @@ export default JogoDaVelha;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        width: "100%",
+        height: "75%",
         backgroundColor: '#FF8433',
-        alignItems: 'center',
-        justifyContent: 'center',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
     },
     board: {
         display: 'flex',
@@ -128,5 +133,15 @@ const styles = StyleSheet.create({
         fontSize: 18,
         padding: 10,
         margin: 5,
-    }
+    },
+    button: {
+        backgroundColor: "#006400",
+        padding: 10,
+        borderRadius: 5,
+        marginTop: 20,
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 18,
+    },
 })
