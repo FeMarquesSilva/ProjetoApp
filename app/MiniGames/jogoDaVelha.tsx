@@ -115,7 +115,7 @@ const JogoDaVelha = () => {
                 <Text style={styles.playerTurn}>Jogador da vez: {jogadorDaVez()}</Text>
                 <View style={styles.board}>
                     {tabuleiro().map((_, i) => (
-                        <Text style={styles.cell} onPress={() => play(i)}>{jogada[i]}</Text>
+                        <Text key={i} style={styles.cell} onPress={() => play(i)}>{jogada[i]}</Text>
                     ))}
                 </View>
                 <Button title="Reiniciar Partida" onPress={reiniciarPartida} />
