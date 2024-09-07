@@ -6,7 +6,7 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-nati
 const index = () => {
     return (
         <View>
-            <Header title="Mini Games"></Header>
+            <Header title="MINI GAMES"></Header>
             <ScrollView style={styles.list}>
                 <TouchableOpacity style={styles.games} onPress={() => { router.navigate("/MiniGames/jogoDaVelha") }}>
                     <SimpleLineIcons style={styles.button} name="game-controller" size={24} color="black" />

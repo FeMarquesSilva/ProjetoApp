@@ -93,12 +93,12 @@ const jogoDosPassos = () => {
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
+        backgroundColor: "#000"
     },
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: "#000"
     },
     stepText: {
         fontSize: 48,
