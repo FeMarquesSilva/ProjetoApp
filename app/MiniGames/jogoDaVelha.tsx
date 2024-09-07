@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const JogoDaVelha = () => {
 
@@ -15,11 +16,15 @@ const JogoDaVelha = () => {
         [2, 4, 6]
     ]
 
-    const [tabuleiro, setTabuleiro] = useState([
+    const [tabuleiros, setTabuleiro] = useState([
         [0, 0, 0],
         [0, 0, 0],
         [0, 0, 0]
     ]);
+
+    const tabuleiro = () => {
+        return new Array(9).fill(true)
+    }
 
     const [jogador, setJogador] = useState(1);
     const [jogadorAtual, setJogadorAtual] = useState(1);
@@ -34,8 +39,6 @@ const JogoDaVelha = () => {
     const [jogador2Turn, setJogador2Turn] = useState(false);
     const [jogador1Name, setJogador1Name] = useState('Player1');
     const [jogador2Name, setJogador2Name] = useState('Player2');
-    const [jogador1TurnName, setJogador1TurnName] = useState('Player1 Turn: True');
-    const [jogador2TurnName, setJogador2TurnName] = useState('Player2 Turn: False');
 
     //Função para verificar quem é o jogar da vez:
     const jogadorDaVez = () => {
@@ -57,8 +60,13 @@ const JogoDaVelha = () => {
             <View>
                 <Text style={styles.playerTurn}>Jogador da vez: {jogadorDaVez()}</Text>
             </View>
-            <View style={styles.container}>
 
+            <View style={styles.container}>
+                <View style={styles.board}>
+                    {tabuleiro().map((_, i) => (
+                        <Text style={styles.cell}></Text>
+                    ))}
+                </View>
             </View>
         </View>
     );
@@ -72,7 +80,30 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     container: {
-
+        width: "100%",
+        height: "75%",
+        backgroundColor: '#FF8433',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    board: {
+        display: 'flex',
+        justifyContent: 'center',
+        width: 370,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        margin: 10,
+    },
+    cell: {
+        width: 100,
+        height: 100,
+        display: 'flex',
+        textAlign: 'center',
+        backgroundColor: "#fff",
+        justifyContent: 'center',
+        margin: 2,
     },
     buttons: {
 
@@ -85,7 +116,7 @@ const styles = StyleSheet.create({
         margin: 5,
     },
     playerTurn: {
-        backgroundColor: "#ff1",
+        backgroundColor: "#73b295",
         textAlign: 'center',
         fontSize: 18,
         padding: 10,
