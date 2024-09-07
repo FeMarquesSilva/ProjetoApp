@@ -37,6 +37,16 @@ const JogoDaVelha = () => {
     const [jogador1TurnName, setJogador1TurnName] = useState('Player1 Turn: True');
     const [jogador2TurnName, setJogador2TurnName] = useState('Player2 Turn: False');
 
+    //Função para verificar quem é o jogar da vez:
+    const jogadorDaVez = () => {
+        if (jogador1Turn) {
+            return jogador1Name
+        }
+        else {
+            return jogador2Name
+        }
+    }
+
     return (
         <View>
             <Header title="Jogo da Velha"></Header>
@@ -45,7 +55,7 @@ const JogoDaVelha = () => {
                 <Text>Total vitorias {jogador2Name}: {jogador2Score}</Text>
             </View>
             <View>
-                <Text style={styles.playerTurn}>{jogador1TurnName}</Text>
+                <Text style={styles.playerTurn}>Jogador da vez: {jogadorDaVez()}</Text>
             </View>
             <View style={styles.container}>
 
@@ -76,7 +86,10 @@ const styles = StyleSheet.create({
     },
     playerTurn: {
         backgroundColor: "#ff1",
+        textAlign: 'center',
         fontSize: 18,
+        padding: 10,
+        margin: 5,
     }
 
 })
