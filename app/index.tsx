@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
+import { router } from "expo-router";
+import { Button, StyleSheet, Text, View } from "react-native";
 
 const index = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Essa tela deverá exibir a barra de carregamento do jogo!</Text>
+            <Button title="Tela inicial" onPress={() => router.navigate("/TelasDoGame")} />
         </View>
     );
 }
