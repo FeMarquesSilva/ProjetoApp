@@ -34,28 +34,19 @@ const JogoDaVelha = () => {
     const [jogador2Turn, setJogador2Turn] = useState(false);
     const [jogador1Name, setJogador1Name] = useState('Player1');
     const [jogador2Name, setJogador2Name] = useState('Player2');
-    const [jogador1ScoreName, setJogador1ScoreName] = useState('Player1 Score: 0');
-    const [jogador2ScoreName, setJogador2ScoreName] = useState('Player2 Score: 0');
     const [jogador1TurnName, setJogador1TurnName] = useState('Player1 Turn: True');
     const [jogador2TurnName, setJogador2TurnName] = useState('Player2 Turn: False');
 
     return (
-        <View style={styles.container}>
-            <Header title="Jogo da Velha"></Header>
-            <Text style={styles.title}>Jogo da Velha</Text>
-            <Text style={styles.title}>Jogador 1: {jogador1Name}</Text>
-            <Text style={styles.title}>Jogador 2: {jogador2Name}</Text>
-            <Text style={styles.title}>Jogador 1 Turn: {jogador1}</Text>
-            <Text style={styles.title}>Jogador 2 Turn: {jogador2}</Text>
-            <Text style={styles.title}>Jogador 1 Score: {jogador1Score}</Text>
-            <Text style={styles.title}>Jogador 2 Score: {jogador2Score}</Text>
-        </View>
-    )
-
-
-    return (
         <View>
             <Header title="Jogo da Velha"></Header>
+            <View style={styles.info}>
+                <Text>Total vitorias {jogador1Name}: {jogador1Score}</Text>
+                <Text>Total vitorias {jogador2Name}: {jogador2Score}</Text>
+            </View>
+            <View>
+                <Text style={styles.playerTurn}>{jogador1TurnName}</Text>
+            </View>
             <View style={styles.container}>
 
             </View>
@@ -76,5 +67,16 @@ const styles = StyleSheet.create({
     buttons: {
 
     },
+    info: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        backgroundColor: "#fff",
+        padding: 10,
+        margin: 5,
+    },
+    playerTurn: {
+        backgroundColor: "#ff1",
+        fontSize: 18,
+    }
 
 })
