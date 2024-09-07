@@ -60,7 +60,6 @@ const JogoDaVelha = () => {
         return jogadorTurn[index]
     }
 
-
     //Marcação dinâmica de qual posição está sendo clicada;
     const play = (index: number) => {
         setJogada(prev => ({ ...prev, [index]: jogadorTurn }))
@@ -94,13 +93,10 @@ export default JogoDaVelha;
 
 const styles = StyleSheet.create({
     container: {
-        width: "100%",
-        height: "75%",
+        flex: 1,
         backgroundColor: '#FF8433',
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     board: {
         display: 'flex',
