@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import { useState } from "react";
 import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTodoDatabase } from "../database/todoService";
 
 const bichinhoImages = [
   { id: 1, source: require('@/assets/images/bichinho.png') },
@@ -14,6 +15,8 @@ const bichinhoImages = [
 const RegistrationScreen = () => {
   const [name, setName] = useState<string>('')
   const [image, setImage] = useState<number | null>(null)
+  const { saveTamagochi } = useTodoDatabase();
+
 
 
   const register = (): void => {
