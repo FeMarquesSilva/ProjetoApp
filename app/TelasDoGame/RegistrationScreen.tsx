@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import { useState } from "react";
-import { FlatList, Image, Pressable, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const bichinhoImages = [
   { id: 1, source: require('@/assets/images/bichinho.png') },
@@ -24,8 +25,6 @@ const RegistrationScreen = () => {
       alert("Por Favor selecione uma imagem");
       return
     }
-
-
   }
 
   return (
@@ -35,7 +34,7 @@ const RegistrationScreen = () => {
         <Text style={styles.label}>Nome do Bichinho</Text>
         <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Defina um nome para seu bichinho!" />
         <Text style={styles.label}>Selecionar uma Imagem</Text>
-        <FlatList data={bichinhoImages} horizontal renderItem={({ item }) => (
+        <FlatList data={bichinhoImages} numColumns={2} renderItem={({ item }) => (
           <TouchableOpacity style={[styles.imageCard, image === item.id ? styles.selectedImage : null,]}
             onPress={() => setImage(item.id)} >
             <Image source={item.source} style={styles.image} />
@@ -107,5 +106,5 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 18
-  }
+  },
 });
