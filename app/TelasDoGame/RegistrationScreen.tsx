@@ -14,11 +14,11 @@ const RegistrationScreen = () => {
 
   const register = (): void => {
     if (name.trim() === '') {
-      alert("Por Favor digite o nome");
+      alert("Por Favor preencha o nome e selecione um personagem");
       return
     }
     if (image === null) {
-      alert("Por Favor selecione uma imagem");
+      alert("Por Favor preencha o nome e selecione um personagem");
       return
     }
 
