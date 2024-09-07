@@ -3,8 +3,11 @@ import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+type Player = "0" | "X"
+
 const JogoDaVelha = () => {
 
+    //Arrys com as possíveis combinações para ganahr;
     const vitory = [
         [0, 1, 2],
         [3, 4, 5],
@@ -16,38 +19,37 @@ const JogoDaVelha = () => {
         [2, 4, 6]
     ]
 
-    const [tabuleiros, setTabuleiro] = useState([
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0]
-    ]);
-
+    //Criação do tabuçeiro com 9 posições;
     const tabuleiro = () => {
         return new Array(9).fill(true)
     }
 
-    const [jogador, setJogador] = useState(1);
-    const [jogadorAtual, setJogadorAtual] = useState(1);
-    const [jogadas, setJogadas] = useState(0);
+    //Componentes necessários;
     const [vencedor, setVencedor] = useState(null);
     const [reset, setReset] = useState(false);
-    const [jogador1, setJogador1] = useState('X');
-    const [jogador2, setJogador2] = useState('O');
     const [jogador1Score, setJogador1Score] = useState(0);
     const [jogador2Score, setJogador2Score] = useState(0);
-    const [jogador1Turn, setJogador1Turn] = useState(true);
+    const [jogadorTurn, setJogadorTurn] = useState("X");
     const [jogador2Turn, setJogador2Turn] = useState(false);
     const [jogador1Name, setJogador1Name] = useState('Player1');
     const [jogador2Name, setJogador2Name] = useState('Player2');
+    const [jogada, setJogada] = useState<{ [key: string] : Player}>({})
 
     //Função para verificar quem é o jogar da vez:
     const jogadorDaVez = () => {
-        if (jogador1Turn) {
+        if (jogadorTurn === "X") {
             return jogador1Name
         }
         else {
             return jogador2Name
         }
+    }
+
+    //Marcação dinâmica de qual posição está sendo clicada;
+    const play = (index: number) => {
+        setJogada(prev => ({ ...prev, [index]: jogadorTurn}))
+        setJogadorTurn(prev => prev === "O" ? "X" : "O")
+
     }
 
     return (
@@ -64,7 +66,7 @@ const JogoDaVelha = () => {
             <View style={styles.container}>
                 <View style={styles.board}>
                     {tabuleiro().map((_, i) => (
-                        <Text style={styles.cell}></Text>
+                        <Text style={styles.cell} onPress={() => play(i)}>{jogada[i]}</Text>
                     ))}
                 </View>
             </View>
@@ -75,10 +77,6 @@ const JogoDaVelha = () => {
 export default JogoDaVelha;
 
 const styles = StyleSheet.create({
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-    },
     container: {
         width: "100%",
         height: "75%",
@@ -105,9 +103,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         margin: 2,
     },
-    buttons: {
-
-    },
     info: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -122,5 +117,4 @@ const styles = StyleSheet.create({
         padding: 10,
         margin: 5,
     }
-
 })
