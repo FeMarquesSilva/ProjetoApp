@@ -25,7 +25,7 @@ const JogoDaVelha = () => {
     }
 
     //Componentes necessários;
-    const [vencedor, setVencedor] = useState<Player | null>(null);
+    const [vencedor, setVencedor] = useState<string | null>(null);
     const [reset, setReset] = useState(false);
     const [jogador1Score, setJogador1Score] = useState(0);
     const [jogador2Score, setJogador2Score] = useState(0);
@@ -62,10 +62,10 @@ const JogoDaVelha = () => {
                 setVencedor(jogadaAtual[a]);
                 if (jogadaAtual[a] === "X") {
                     setJogador1Score((prev) => prev + 1);
-                    fimDePartida(jogadaAtual[a]);
+                    fimDePartida("Player1");
                 } else {
                     setJogador2Score((prev) => prev + 1);
-                    fimDePartida(jogadaAtual[a]);
+                    fimDePartida("Player2");
                 }
                 return;
             }
@@ -77,7 +77,7 @@ const JogoDaVelha = () => {
     };
 
     //Funcção para informar o fim da partida;
-    const fimDePartida = (vencedor: Player | null) => {
+    const fimDePartida = (vencedor: string | null) => {
         if (vencedor !== null) {
             alert(`O jogador ${vencedor} venceu!`);
         } else {
@@ -93,8 +93,14 @@ const JogoDaVelha = () => {
         setJogadorTurn("X");
     };
 
+    //Função para resetar os pontos dos jogadores:
+    const reiniciarPontuação = () => {
+        setJogador1Score(0);
+        setJogador2Score(0);
+    }
+
     return (
-        <View>
+        <View style={styles.containerBody}>
             <Header title="Jogo da Velha"></Header>
             <View style={styles.container}>
                 <View style={styles.info}>
@@ -105,6 +111,7 @@ const JogoDaVelha = () => {
                         <Text style={styles.infoText}>Vitórias {jogador2Name}: {jogador2Score}</Text>
                     </View>
                 </View>
+                <Button title="Reiniciar Pontuações" onPress={reiniciarPontuação} />
                 <Text style={styles.playerTurn}>Jogador da vez: {jogadorDaVez()}</Text>
                 <View style={styles.board}>
                     {tabuleiro().map((_, i) => (
@@ -113,7 +120,6 @@ const JogoDaVelha = () => {
                 </View>
                 <Button title="Reiniciar Partida" onPress={reiniciarPartida} />
             </View>
-
         </View>
     );
 }
@@ -121,10 +127,13 @@ const JogoDaVelha = () => {
 export default JogoDaVelha;
 
 const styles = StyleSheet.create({
+    containerBody: {
+        backgroundColor: "#FF8433",
+        height: "100%",
+    },
     container: {
         width: "100%",
         height: "75%",
-        backgroundColor: '#FF8433',
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
