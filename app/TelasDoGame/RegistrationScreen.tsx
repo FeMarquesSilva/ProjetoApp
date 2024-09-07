@@ -33,17 +33,18 @@ const RegistrationScreen = () => {
         <Text style={styles.label}>Nome do Bichinho</Text>
         <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Defina um nome para seu bichinho!" />
         <Text style={styles.label}>Selecionar uma Imagem</Text>
-        <FlatList data={bichinhoImages} horizontal renderItem={({ item, index }) => (
-          <TouchableOpacity style={[styles.imageCard, image === index ? styles.selectedImage : null,]}
-            onPress={() => setImage(index)} >
+        <FlatList data={bichinhoImages} horizontal renderItem={({ item }) => (
+          <TouchableOpacity style={[styles.imageCard, image === item.id ? styles.selectedImage : null,]}
+            onPress={() => setImage(item.id)} >
             <Image source={item.source} style={styles.image} />
           </TouchableOpacity>
         )}
-          keyExtractor={(_, index) => index.toString()}
+          keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={styles.imageList}
         />
-        <Pressable style={styles.buttonAdd} onPress={register}>
+        <TouchableOpacity style={styles.buttonAdd} onPress={register}>
           <Text style={styles.buttonText}>Cadastrar Bichinho</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -57,13 +58,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#FF8433",
   },
   container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
+    flex: 1,
+    padding: 20,
+    justifyContent: 'center',
   },
   label: {
     fontSize: 16,
-    marginBottom: 10
+    marginBottom: 10,
+    fontWeight: 'bold'
   },
   input: {
     padding: 10,
@@ -71,21 +73,27 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     marginBottom: 20,
     borderRadius: 6,
-    fontSize: 18
+    fontSize: 18,
+  },
+  imageList: {
+    flexGrow: 1,
+    alignItems: 'center',
+    padding: 30,
+    gap: 10
   },
   imageCard: {
     padding: 5,
     borderWidth: 2,
     borderColor: '#ddd',
     borderRadius: 6,
-    marginRight: 10
+    marginRight: 10,
   },
   selectedImage: {
     borderColor: '#28a745'
   },
   image: {
-    height: 60,
-    width: 60
+    height: 120,
+    width: 120,
   },
   buttonAdd: {
     backgroundColor: "#28a745",
