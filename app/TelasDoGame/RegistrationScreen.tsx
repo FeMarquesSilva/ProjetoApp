@@ -1,10 +1,10 @@
 import Header from "@/components/Header";
 import { useState } from "react";
-import { FlatList, Pressable, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, Pressable, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
-const bichinhoImages: any[] = [
-  require('./assets/images/bichinho.png'),
-  require('./assets/images/bichinho2.png')
+const bichinhoImages = [
+  { id: 1, source: require('@/assets/images/bichinho.png') },
+  { id: 2, source: require('@/assets/images/bichinho2.png') }
 ]
 
 const RegistrationScreen = () => {
@@ -34,9 +34,9 @@ const RegistrationScreen = () => {
         <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Defina um nome para seu bichinho!" />
         <Text style={styles.label}>Selecionar uma Imagem</Text>
         <FlatList data={bichinhoImages} horizontal renderItem={({ item, index }) => (
-          <TouchableOpacity style={[styles.imageCard === index ? styles.selectedImage : null,]}
+          <TouchableOpacity style={[styles.imageCard, image === index ? styles.selectedImage : null,]}
             onPress={() => setImage(index)} >
-            <Image source={item} style={styles.image} />
+            <Image source={item.source} style={styles.image} />
           </TouchableOpacity>
         )}
           keyExtractor={(_, index) => index.toString()}
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   },
   image: {
     height: 60,
-    width: 60,
+    width: 60
   },
   buttonAdd: {
     backgroundColor: "#28a745",
