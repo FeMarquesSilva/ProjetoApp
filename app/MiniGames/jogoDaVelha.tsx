@@ -52,17 +52,12 @@ const JogoDaVelha = () => {
         setJogadorTurn("X");
     };
 
-    //Verificar quem é o jogador da vez e em qual cell ele está jogadno;
-    const posiçãoJogadorDaVez = (index: number) => {
-        if (!jogadorTurn[index]) {
-            return;
-        }
-        return jogadorTurn[index]
-    }
-
-
     //Marcação dinâmica de qual posição está sendo clicada;
     const play = (index: number) => {
+        //Ajustando para que se a posição já tiver preenchida, não faça nada:
+        if (jogada[index]) {
+            return;
+        }
         setJogada(prev => ({ ...prev, [index]: jogadorTurn }))
         setJogadorTurn(prev => prev === "O" ? "X" : "O")
 
