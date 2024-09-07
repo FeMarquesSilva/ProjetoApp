@@ -25,7 +25,7 @@ const JogoDaVelha = () => {
     }
 
     //Componentes necessários;
-    const [vencedor, setVencedor] = useState(null);
+    const [vencedor, setVencedor] = useState<Player | null>(null);
     const [reset, setReset] = useState(false);
     const [jogador1Score, setJogador1Score] = useState(0);
     const [jogador2Score, setJogador2Score] = useState(0);
@@ -33,7 +33,7 @@ const JogoDaVelha = () => {
     const [jogador2Turn, setJogador2Turn] = useState(false);
     const [jogador1Name, setJogador1Name] = useState('Player1');
     const [jogador2Name, setJogador2Name] = useState('Player2');
-    const [jogada, setJogada] = useState<{ [key: string] : Player}>({})
+    const [jogada, setJogada] = useState<{ [key: string]: Player }>({})
 
     //Função para verificar quem é o jogar da vez:
     const jogadorDaVez = () => {
@@ -45,9 +45,25 @@ const JogoDaVelha = () => {
         }
     }
 
+    // Função para reiniciar o jogo
+    const reiniciarJogo = () => {
+        setVencedor(null);
+        setJogada({});
+        setJogadorTurn("X");
+    };
+
+    //Verificar quem é o jogador da vez e em qual cell ele está jogadno;
+    const posiçãoJogadorDaVez = (index: number) => {
+        if (!jogadorTurn[index]) {
+            return;
+        }
+        return jogadorTurn[index]
+    }
+
+
     //Marcação dinâmica de qual posição está sendo clicada;
     const play = (index: number) => {
-        setJogada(prev => ({ ...prev, [index]: jogadorTurn}))
+        setJogada(prev => ({ ...prev, [index]: jogadorTurn }))
         setJogadorTurn(prev => prev === "O" ? "X" : "O")
 
     }
@@ -96,11 +112,11 @@ const styles = StyleSheet.create({
     },
     cell: {
         width: 100,
+        fontSize: 80,
         height: 100,
         display: 'flex',
         textAlign: 'center',
-        backgroundColor: "#fff",
-        justifyContent: 'center',
+        backgroundColor: "#d4f1d9",
         margin: 2,
     },
     info: {
