@@ -1,14 +1,48 @@
 import Header from "@/components/Header";
-import { Pressable, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
+import { useState } from "react";
+import { FlatList, Pressable, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+
+const bichinhoImages: any[] = [
+  require('./assets/images/bichinho.png'),
+  require('./assets/images/bichinho2.png')
+]
 
 const RegistrationScreen = () => {
+  const [name, setName] = useState<string>('')
+  const [image, setImage] = useState<number | null>(null)
+
+
+  const register = (): void => {
+    if (name.trim() === '') {
+      alert("Por Favor digite o nome");
+      return
+    }
+    if (image === null) {
+      alert("Por Favor selecione uma imagem");
+      return
+    }
+
+
+  }
+
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Header title="Cadastro de Personagem"></Header>
-      <View style={styles.addForm}>
-        <TextInput placeholder="Defina um nome para seu perssonagem!" />
-        <Pressable style={styles.buttonAdd} >
-          <Text>+</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <Header title="CADASTRO DE BICHINHO"></Header>
+      <View style={styles.container}>
+        <Text style={styles.label}>Nome do Bichinho</Text>
+        <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Defina um nome para seu bichinho!" />
+        <Text style={styles.label}>Selecionar uma Imagem</Text>
+        <FlatList data={bichinhoImages} horizontal renderItem={({ item, index }) => (
+          <TouchableOpacity style={[styles.imageCard === index ? styles.selectedImage : null,]}
+            onPress={() => setImage(index)} >
+            <Image source={item} style={styles.image} />
+          </TouchableOpacity>
+        )}
+          keyExtractor={(_, index) => index.toString()}
+        />
+        <Pressable style={styles.buttonAdd} onPress={register}>
+          <Text style={styles.buttonText}>Cadastrar Bichinho</Text>
         </Pressable>
       </View>
     </SafeAreaView>
@@ -18,24 +52,50 @@ const RegistrationScreen = () => {
 export default RegistrationScreen;
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
     backgroundColor: "#FF8433",
   },
-  addForm: {
+  container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
   },
+  label: {
+    fontSize: 16,
+    marginBottom: 10
+  },
+  input: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    marginBottom: 20,
+    borderRadius: 6,
+    fontSize: 18
+  },
+  imageCard: {
+    padding: 5,
+    borderWidth: 2,
+    borderColor: '#ddd',
+    borderRadius: 6,
+    marginRight: 10
+  },
+  selectedImage: {
+    borderColor: '#28a745'
+  },
+  image: {
+    height: 60,
+    width: 60,
+  },
   buttonAdd: {
-    backgroundColor: '#FF0000',
-    width: 40,
-    height: 40,
+    backgroundColor: "#28a745",
+    padding: 10,
+    borderRadius: 6,
+    alignItems: 'center',
+    marginTop: 20
   },
-  text: {
-    fontSize: 30,
-    color: "#FFF",
-    textAlign: "center",
-    marginTop: 50,
-  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18
+  }
 });
