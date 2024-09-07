@@ -1,9 +1,12 @@
+import Header from "@/components/Header";
 import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const index = () => {
     return (
+        <View>
+        <Header title="Mini Games"></Header>
         <ScrollView>
             <TouchableOpacity style={styles.games} onPress={() => { router.navigate("/MiniGames/jogoDaVelha") }}>
                 <SimpleLineIcons style={styles.button} name="game-controller" size={24} color="black" />
@@ -14,6 +17,7 @@ const index = () => {
                 <Text style={styles.texts}>Jogo da Memória</Text>
             </TouchableOpacity>
         </ScrollView>
+        </View>
     );
 }
 
