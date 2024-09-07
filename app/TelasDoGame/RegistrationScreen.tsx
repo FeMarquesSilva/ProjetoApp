@@ -1,15 +1,22 @@
 import Header from "@/components/Header";
 import { useState } from "react";
-import { FlatList, Image, Pressable, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useTodoDatabase } from "../database/todoService";
 
 const bichinhoImages = [
   { id: 1, source: require('@/assets/images/bichinho.png') },
-  { id: 2, source: require('@/assets/images/bichinho2.png') }
+  { id: 2, source: require('@/assets/images/bichinho2.png') },
+  { id: 3, source: require('@/assets/images/bichinho3.png') },
+  { id: 4, source: require('@/assets/images/bichinho4.png') },
+  { id: 5, source: require('@/assets/images/bichinho5.png') },
 ]
 
 const RegistrationScreen = () => {
   const [name, setName] = useState<string>('')
   const [image, setImage] = useState<number | null>(null)
+  const { saveTamagochi } = useTodoDatabase();
+
 
 
   const register = (): void => {
@@ -21,10 +28,7 @@ const RegistrationScreen = () => {
       alert("Por Favor preencha o nome e selecione um personagem");
       return
     }
-
-
   }
-
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -33,7 +37,7 @@ const RegistrationScreen = () => {
         <Text style={styles.label}>Nome do Bichinho</Text>
         <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Defina um nome para seu bichinho!" />
         <Text style={styles.label}>Selecionar uma Imagem</Text>
-        <FlatList data={bichinhoImages} horizontal renderItem={({ item }) => (
+        <FlatList data={bichinhoImages} numColumns={2} renderItem={({ item }) => (
           <TouchableOpacity style={[styles.imageCard, image === item.id ? styles.selectedImage : null,]}
             onPress={() => setImage(item.id)} >
             <Image source={item.source} style={styles.image} />
@@ -105,5 +109,5 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 18
-  }
+  },
 });

@@ -17,20 +17,16 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          ),
-        }}
+          title: 'Jogo da Velha',
+          tabBarStyle: { display: 'none' },
+      }} 
       />
       <Tabs.Screen
         name="RegistrationScreen"
         options={{
-          title: 'Cadastro',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} />
-          ),
-        }}
+          title: 'Jogo da Velha',
+          tabBarStyle: { display: 'none' },
+      }} 
       />
     </Tabs>
   );

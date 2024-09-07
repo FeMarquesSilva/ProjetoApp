@@ -101,7 +101,7 @@ const JogoDaVelha = () => {
 
     return (
         <View style={styles.containerBody}>
-            <Header title="Jogo da Velha"></Header>
+            <Header title="JOGO DA VELHA"></Header>
             <View style={styles.container}>
                 <View style={styles.info}>
                     <View style={styles.infoItem}>
