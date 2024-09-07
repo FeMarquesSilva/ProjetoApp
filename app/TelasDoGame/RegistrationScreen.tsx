@@ -1,16 +1,17 @@
-import { Button, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import Header from "@/components/Header";
+import { Pressable, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
 
 const RegistrationScreen = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Cadastrar Perssonagem</Text>
+    <SafeAreaView style={styles.container}>
+      <Header title="Cadastro de Personagem"></Header>
       <View style={styles.addForm}>
         <TextInput placeholder="Defina um nome para seu perssonagem!" />
         <Pressable style={styles.buttonAdd} >
-            <Text>+</Text>
+          <Text>+</Text>
         </Pressable>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-end',
   },
-  buttonAdd:{
+  buttonAdd: {
     backgroundColor: '#FF0000',
     width: 40,
     height: 40,
