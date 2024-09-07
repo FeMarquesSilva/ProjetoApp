@@ -17,9 +17,9 @@ const RegistrationScreen = () => {
   const [image, setImage] = useState<number | null>(null)
   const { saveTamagochi } = useTodoDatabase();
 
+  
 
-
-  const register = (): void => {
+  const register = async () => {
     if (name.trim() === '') {
       alert("Por Favor digite o nome");
       return
@@ -27,6 +27,13 @@ const RegistrationScreen = () => {
     if (image === null) {
       alert("Por Favor selecione uma imagem");
       return
+    }
+    try {
+      const res = await saveTamagochi({ name: "name", image: 1, hunger: 100, sleep: 100, fun: 100 });
+      alert("Deu certo!")
+      
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -46,7 +53,7 @@ const RegistrationScreen = () => {
           keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={styles.imageList}
         />
-        <TouchableOpacity style={styles.buttonAdd} onPress={register}>
+        <TouchableOpacity style={styles.buttonAdd} onPress={() => {register()}}>
           <Text style={styles.buttonText}>Cadastrar Bichinho</Text>
         </TouchableOpacity>
       </View>

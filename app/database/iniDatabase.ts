@@ -5,7 +5,7 @@ export async function initiDatabase(database: SQLiteDatabase) {
         CREATE TABLE IF NOT EXISTS tamagchis (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
-            image TEXT,  -- URI da imagem do bichinho
+            image INTEGER,  -- ID da imagem do bichinho
             hunger INTEGER DEFAULT 100, -- Atributo de Fome
             sleep INTEGER DEFAULT 100,  -- Atributo de Sono
             fun INTEGER DEFAULT 100     -- Atributo de Diversão
