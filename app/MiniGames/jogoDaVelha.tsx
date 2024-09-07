@@ -45,13 +45,6 @@ const JogoDaVelha = () => {
         }
     }
 
-    // Função para reiniciar o jogo
-    const reiniciarJogo = () => {
-        setVencedor(null);
-        setJogada({});
-        setJogadorTurn("X");
-    };
-
     //Marcação dinâmica de qual posição está sendo clicada;
     const play = (index: number) => {
         //Ajustando para que se a posição já tiver preenchida, não faça nada:
@@ -63,17 +56,44 @@ const JogoDaVelha = () => {
 
     }
 
+    // Função para verificar o vencedor
+    const verificarVencedor = () => {
+        for (const [a, b, c] of vitory) {
+            if (jogada[a] && jogada[a] === jogada[b] && jogada[a] === jogada[c]) {
+                setVencedor(jogada[a]);
+                if (jogada[a] === "X") {
+                    setJogador1Score((prev) => prev + 1);
+                } else {
+                    setJogador2Score((prev) => prev + 1);
+                }
+                return;
+            }
+        }
+        if (Object.keys(jogada).length === 9 && !vencedor) {
+            setVencedor(null); // Empate
+        }
+    };
+
+    // Função para reiniciar o jogo
+    const reiniciarJogo = () => {
+        setVencedor(null);
+        setJogada({});
+        setJogadorTurn("X");
+    };
+
     return (
         <View>
             <Header title="Jogo da Velha"></Header>
-            <View style={styles.info}>
-                <Text>Total vitorias {jogador1Name}: {jogador1Score}</Text>
-                <Text>Total vitorias {jogador2Name}: {jogador2Score}</Text>
-            </View>
-            <View>
-                <Text style={styles.playerTurn}>Jogador da vez: {jogadorDaVez()}</Text>
-            </View>
             <View style={styles.container}>
+                <View style={styles.info}>
+                    <View style={styles.infoItem}>
+                        <Text style={styles.infoText}>Vitórias {jogador1Name}: {jogador1Score}</Text>
+                    </View>
+                    <View style={styles.infoItem}>
+                        <Text style={styles.infoText}>Vitórias {jogador2Name}: {jogador2Score}</Text>
+                    </View>
+                </View>
+                <Text style={styles.playerTurn}>Jogador da vez: {jogadorDaVez()}</Text>
                 <View style={styles.board}>
                     {tabuleiro().map((_, i) => (
                         <Text style={styles.cell} onPress={() => play(i)}>{jogada[i]}</Text>
@@ -118,9 +138,18 @@ const styles = StyleSheet.create({
     info: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        backgroundColor: "#fff",
+        width: '100%',
         padding: 10,
-        margin: 5,
+        backgroundColor: "#F0391D",
+        marginBottom: 100,
+    },
+    infoItem: {
+        flex: 1,
+        alignItems: 'center',
+    },
+    infoText: {
+        fontSize: 16,
+        color: "#fff",
     },
     playerTurn: {
         backgroundColor: "#73b295",
