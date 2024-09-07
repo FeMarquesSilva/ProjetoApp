@@ -45,37 +45,49 @@ const JogoDaVelha = () => {
         }
     }
 
-    //Marcação dinâmica de qual posição está sendo clicada;
+    // Marcação dinâmica de qual posição está sendo clicada e verifica se deu uma combinação de vitoria
     const play = (index: number) => {
-        //Ajustando para que se a posição já tiver preenchida, não faça nada:
-        if (jogada[index]) {
-            return;
+        if (!jogada[index] && !vencedor) {
+            const novaJogada = { ...jogada, [index]: jogadorTurn };
+            setJogada(novaJogada);
+            setJogadorTurn((prev) => (prev === "X" ? "0" : "X"));
+            verificarVencedor(novaJogada);
         }
-        setJogada(prev => ({ ...prev, [index]: jogadorTurn }))
-        setJogadorTurn(prev => prev === "O" ? "X" : "O")
-
-    }
+    };
 
     // Função para verificar o vencedor
-    const verificarVencedor = () => {
+    const verificarVencedor = (jogadaAtual: { [key: number]: Player }) => {
         for (const [a, b, c] of vitory) {
-            if (jogada[a] && jogada[a] === jogada[b] && jogada[a] === jogada[c]) {
-                setVencedor(jogada[a]);
-                if (jogada[a] === "X") {
+            if (jogadaAtual[a] && jogadaAtual[a] === jogadaAtual[b] && jogadaAtual[a] === jogadaAtual[c]) {
+                setVencedor(jogadaAtual[a]);
+                if (jogadaAtual[a] === "X") {
                     setJogador1Score((prev) => prev + 1);
+                    fimDePartida(jogadaAtual[a]);
                 } else {
                     setJogador2Score((prev) => prev + 1);
+                    fimDePartida(jogadaAtual[a]);
                 }
                 return;
             }
         }
-        if (Object.keys(jogada).length === 9 && !vencedor) {
+        if (Object.keys(jogadaAtual).length === 9 && !vencedor) {
             setVencedor(null); // Empate
+            fimDePartida(null); // Empate
         }
     };
 
+    //Funcção para informar o fim da partida;
+    const fimDePartida = (vencedor: Player | null) => {
+        if (vencedor !== null) {
+            alert(`O jogador ${vencedor} venceu!`);
+        } else {
+            alert("Empate!");
+        }
+        setVencedor(vencedor);
+    };
+
     // Função para reiniciar o jogo
-    const reiniciarJogo = () => {
+    const reiniciarPartida = () => {
         setVencedor(null);
         setJogada({});
         setJogadorTurn("X");
@@ -99,7 +111,7 @@ const JogoDaVelha = () => {
                         <Text style={styles.cell} onPress={() => play(i)}>{jogada[i]}</Text>
                     ))}
                 </View>
-                <Button title="Reiniciar" onPress={reiniciarJogo} />
+                <Button title="Reiniciar Partida" onPress={reiniciarPartida} />
             </View>
 
         </View>
