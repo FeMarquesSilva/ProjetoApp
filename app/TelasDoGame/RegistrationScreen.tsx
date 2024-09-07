@@ -25,7 +25,6 @@ const RegistrationScreen = () => {
 
   }
 
-
   return (
     <SafeAreaView style={styles.safeArea}>
       <Header title="CADASTRO DE BICHINHO"></Header>
