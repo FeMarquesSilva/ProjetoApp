@@ -4,7 +4,7 @@ const Index = () => {
     return (
         <SafeAreaView style={styles.container}>
             <View >
-                <Text style={styles.text}>Essa será a tela inicial do jogo, a qual deverá aparecer após cadastrar o perssongaem.</Text>
+                <Text style={styles.text}>INICIO</Text>
             </View>
         </SafeAreaView>
     );
@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
+        backgroundColor: "#FF8433"
 
     },
     text: {
