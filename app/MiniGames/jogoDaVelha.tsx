@@ -41,7 +41,7 @@ const JogoDaVelha = () => {
 
     return (
         <View style={styles.container}>
-            <Header />
+            <Header title="Jogo da Velha"></Header>
             <Text style={styles.title}>Jogo da Velha</Text>
             <Text style={styles.title}>Jogador 1: {jogador1Name}</Text>
             <Text style={styles.title}>Jogador 2: {jogador2Name}</Text>
@@ -67,8 +67,8 @@ export default JogoDaVelha;
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: 24;
-        fontWeight: 'bold';
+        fontSize: 24,
+        fontWeight: 'bold',
     },
     container: {
 
