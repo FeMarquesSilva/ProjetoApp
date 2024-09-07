@@ -6,17 +6,17 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-nati
 const index = () => {
     return (
         <View>
-        <Header title="MINI GAMES"></Header>
-        <ScrollView style={styles.list}>
-            <TouchableOpacity style={styles.games} onPress={() => { router.navigate("/MiniGames/jogoDaVelha") }}>
-                <SimpleLineIcons style={styles.button} name="game-controller" size={24} color="black" />
-                <Text style={styles.texts}>Jogo da Velha</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.games} onPress={() => { router.navigate("/MiniGames/jogoDaMemoria") }}>
-                <SimpleLineIcons style={styles.button} name="game-controller" size={24} color="black" />
-                <Text style={styles.texts}>Jogo da Memória</Text>
-            </TouchableOpacity>
-        </ScrollView>
+            <Header title="MINI GAMES"></Header>
+            <ScrollView style={styles.list}>
+                <TouchableOpacity style={styles.games} onPress={() => { router.navigate("/MiniGames/jogoDaVelha") }}>
+                    <SimpleLineIcons style={styles.button} name="game-controller" size={24} color="black" />
+                    <Text style={styles.texts}>Jogo da Velha</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.games} onPress={() => { router.navigate("/MiniGames/jogoDosPassos") }}>
+                    <SimpleLineIcons style={styles.button} name="game-controller" size={24} color="black" />
+                    <Text style={styles.texts}>Jogo dos Passos</Text>
+                </TouchableOpacity>
+            </ScrollView>
         </View>
     );
 }

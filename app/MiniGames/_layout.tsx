@@ -32,9 +32,9 @@ export default function TabLayout() {
                     tabBarStyle: { display: 'none' },
                 }} />
             <Tabs.Screen
-                name="jogoDaMemoria"
+                name="jogoDosPassos"
                 options={{
-                    title: 'Jogo da Memória',
+                    title: 'jogoDosPassos',
                     tabBarStyle: { display: 'none' },
                 }} />
         </Tabs>
