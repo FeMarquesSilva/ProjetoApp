@@ -1,9 +1,10 @@
 import Header from "@/components/Header";
-import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
+import { SimpleLineIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Button, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const index = () => {
+
     return (
         <View>
             <Header title="MINI GAMES"></Header>

@@ -14,13 +14,8 @@ export function useTodoDatabase() {
 
     //Funçã para salvar os bichinhos na tabela do banco de dados chamada: tamagchis
     async function saveTamagochi({ name, image, hunger, sleep, fun }: { name: string, image: number, hunger: number, sleep: number, fun: number }) {
-        const query = await database.prepareAsync(`INSERT INTO tamagchis (name, image, hunger, sleep, fun) VALUES (
-           $name,
-           $image,
-           $hunger,
-           $sleep,
-           $fun,
-        );`)
+        const query = await database.prepareAsync(`INSERT INTO tamagchis (name, image, hunger, sleep, fun) 
+            VALUES ($name, $image, $hunger, $sleep, $fun);`)
         try {
             await query.executeAsync({ $name: name, $image: image, $hunger: hunger, $sleep: sleep, $fun: fun })
         } catch (error) {
@@ -33,7 +28,6 @@ export function useTodoDatabase() {
     async function getTamagochi() {
         try {
             const response = await database.getAllAsync<any>(`SELECT * FROM tamagchis;`)
-            return response;
         } catch (error) {
             throw error;
         }

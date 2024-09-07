@@ -1,17 +1,8 @@
 import { router } from "expo-router";
 import { useEffect } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
-import { useTodoDatabase } from "./database/todoService";
-
-
-
 
 const index = () => {
-    const { getTamagochi } = useTodoDatabase();
-
-    useEffect(() => {
-        getTamagochi();
-    }, [])
 
     return (
         <View style={styles.container}>
