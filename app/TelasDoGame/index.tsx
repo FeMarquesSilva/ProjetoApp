@@ -15,25 +15,15 @@ type Bichinho = {
     imagem: any
 }
 
-/* 
 
-//Importo minha função de puxar as informações cadastradas do banca de dados;
-const { getTamagochi } = useTodoDatabase();
-//Crio uma array de objetos para carregar meus tamagochis;
-const [tamagochiList, setTamagochiList] = useState([{}]);
-
-//Função para carregar as informações e armazenar na minha array;
-const list = async () => {
-    try {
-        const response = await getTamagochi();
-        setTamagochiList(response);
-        console.error(tamagochiList)
-    } catch (error) {
-        console.error(error);
-    }
+type TamagochiList = {
+    id: number;
+    name: string;
+    image: number;
+    hunger: number;
+    sleep: number;
+    fun: number;
 };
-
-*/
 
 const bichinhoData: Bichinho[] = [
     { id: 1, name: 'Bichinho 1', fome: 70, sono: 50, diversao: 80, status: 'ok', imagem: require('@/assets/images/bichinho.png') },
@@ -42,21 +32,6 @@ const bichinhoData: Bichinho[] = [
 
 const Index = () => {
 
-    //Importo minha função de puxar as informações cadastradas do banca de dados;
-    const { getTamagochi } = useTodoDatabase();
-    //Crio uma array de objetos para carregar meus tamagochis;
-    const [tamagochiList, setTamagochiList] = useState([{}]);
-
-    //Função para carregar as informações e armazenar na minha array;
-    const list = async () => {
-        try {
-            const response = await getTamagochi();
-            setTamagochiList(response);
-            console.error(tamagochiList)
-        } catch (error) {
-            console.error(error);
-        }
-    };
 
     const [bichinhos, setBichinhos] = useState<Bichinho[]>([]);
 
