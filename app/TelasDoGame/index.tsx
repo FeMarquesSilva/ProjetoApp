@@ -5,16 +5,6 @@ import { router } from "expo-router";
 import Header from "@/components/Header";
 import { useTodoDatabase } from "../database/todoService";
 
-type Bichinho = {
-    id: number,
-    name: string,
-    fome: number,
-    sono: number,
-    diversao: number,
-    status: string,
-    imagem: any
-}
-
 //Crio o tipagem da minha array de objetos que vou puxar do banco de dados;
 type TamagochiList = {
     id: number;
@@ -34,11 +24,6 @@ const bichinhoImages = [
     { id: 5, source: require('@/assets/images/bichinho5.png') },
 ];
 
-const bichinhoData: Bichinho[] = [
-    { id: 1, name: 'Bichinho 1', fome: 70, sono: 50, diversao: 80, status: 'ok', imagem: require('@/assets/images/bichinho.png') },
-    { id: 2, name: 'Bichinho 2', fome: 80, sono: 20, diversao: 50, status: 'bem', imagem: require('@/assets/images/bichinho2.png') },
-];
-
 const Index = () => {
 
     // Define o estado com o tipo TamagochiList[]
@@ -56,29 +41,38 @@ const Index = () => {
         }
     };
 
-    const [bichinhos, setBichinhos] = useState<Bichinho[]>([]);
-
+    // Chama a função de listagem quando o componente for montado
     useEffect(() => {
-        setBichinhos(bichinhoData)
-    }, [])
+        list();
+    }, []);
 
-    const renderItem = ({ item }: { item: Bichinho }) => (
-        <View style={styles.card}>
-            <Image source={item.imagem} style={styles.image} />
-            <View style={styles.info}>
-                <Text style={styles.name}>{item.name}</Text>
-                <Text>Fome: {item.fome}</Text>
-                <Text>Sono: {item.sono}</Text>
-                <Text>Diversão: {item.diversao}</Text>
-                <Text>Status: {item.status}</Text>
+    // Renderiza cada tamagochi da lista
+    const renderItem = ({ item }: { item: TamagochiList }) => {
+        const imageSource = bichinhoImages.find(img => img.id === item.image)?.source;
+
+        return (
+            <View style={styles.card}>
+                <Image source={imageSource} style={styles.image} />
+                <View style={styles.info}>
+                    <Text style={styles.name}>{item.name}</Text>
+                    <Text>Fome: {item.hunger}</Text>
+                    <Text>Sono: {item.sleep}</Text>
+                    <Text>Diversão: {item.fun}</Text>
+                </View>
             </View>
-        </View>
-    )
+        );
+    };
+
 
     return (
         <SafeAreaView style={styles.container}>
             <Header title="DETALHES DOS BICHINHOS"></Header>
-            <FlatList data={bichinhos} renderItem={renderItem} keyExtractor={(item) => item.id.toString()} contentContainerStyle={styles.list} />
+            <FlatList
+                data={tamagochiList}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id.toString()}
+                contentContainerStyle={styles.list}
+            />
             <TouchableOpacity style={styles.addButton} onPress={() => { router.push("/TelasDoGame/RegistrationScreen") }}>
                 <Ionicons name="add-outline" size={24} color="black" />
             </TouchableOpacity>
