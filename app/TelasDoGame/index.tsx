@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image, FlatList } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import Header from "@/components/Header";
 import { useTodoDatabase } from "../database/todoService";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -39,9 +39,9 @@ const Index = () => {
     };
 
     // Chama a função de listagem quando o componente for montado
-    useEffect(() => {
+    useFocusEffect(() => {
         list();
-    }, []);
+    });
 
     // Atualiza os atributos a cada 3 segundos
     useEffect(() => {
