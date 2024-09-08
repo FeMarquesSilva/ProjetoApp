@@ -12,7 +12,6 @@ const jogoDosPassos = () => {
     const [targetSteps, setTargetSteps] = useState<number>(0);
     const [targetTime, setTargetTime] = useState<number>(0);
 
-
     useEffect(() => {
         let interval: NodeJS.Timeout | null = null;
 

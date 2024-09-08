@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { useLocalSearchParams } from "expo-router";
-import Header from "@/components/Header"; // Importe o Header
+import Header from "@/components/Header";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const DetailsScreen = () => {
     const { id, name, image, hunger, sleep, fun } = useLocalSearchParams();
@@ -63,18 +64,9 @@ const DetailsScreen = () => {
                 <Text>Diversão: {currentFun}</Text>
             </View>
             <View>
-                <Text>Status: {calculateStatus()}</Text>
-            </View>
-
-            <View style={styles.buttonsContainer}>
-                <TouchableOpacity style={styles.button} onPress={feedPet}>
-                    <Text>Alimentar</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={letSleep}>
-                    <Text>Dormir</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={playWithPet}>
-                    <Text>Brincar</Text>
+                <Text>Tela de Detalhes</Text>
+                <TouchableOpacity style={styles.button} onPress={() => { router.navigate("/MiniGames") }}>
+                    <Ionicons name="game-controller" size={24} color="black" />
                 </TouchableOpacity>
             </View>
         </View>

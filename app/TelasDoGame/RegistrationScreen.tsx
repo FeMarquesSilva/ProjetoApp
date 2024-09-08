@@ -16,7 +16,7 @@ const bichinhoImages = [
 const RegistrationScreen = () => {
   const [name, setName] = useState<string>('')
   const [image, setImage] = useState<number | null>(null)
-  const { saveTamagochi } = useTodoDatabase();
+  const { saveTamagochi, deleteTamagochi } = useTodoDatabase();
 
   const register = async () => {
     if (name.trim() === '') {
@@ -28,13 +28,17 @@ const RegistrationScreen = () => {
       return
     }
     try {
-      const res = await saveTamagochi({ name: name, image: image, hunger: 100, sleep: 100, fun: 100 });
+      const res = await saveTamagochi({ name: name, image: image, hunger: 100, sleep: 100, fun: 100, status: 'Muito bem'});
       router.navigate("/TelasDoGame")
       alert("Deu certo!")
       
     } catch (error) {
       console.error(error)
     }
+  }
+
+  const deletarTabela = () => {
+    deleteTamagochi()
   }
 
   return (
@@ -55,6 +59,9 @@ const RegistrationScreen = () => {
         />
         <TouchableOpacity style={styles.buttonAdd} onPress={() => {register()}}>
           <Text style={styles.buttonText}>Cadastrar Bichinho</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonAdd} onPress={() => {deletarTabela()}}>
+          <Text style={styles.buttonText}>Apagar tabela</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
