@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image, FlatList } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image, FlatList } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { router } from "expo-router";
 import Header from "@/components/Header";
 import { useTodoDatabase } from "../database/todoService";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 //Crio o tipagem da minha array de objetos que vou puxar do banco de dados;
 type TamagochiList = {
@@ -29,7 +30,6 @@ const Index = () => {
     // Define o estado com o tipo TamagochiList[]
     const [tamagochiList, setTamagochiList] = useState<TamagochiList[]>([]);
     const { getTamagochi } = useTodoDatabase();
-
 
     // Função para carregar as informações do banco e armazenar no estado
     const list = async () => {
@@ -68,14 +68,14 @@ const Index = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Header title="DETALHES DOS BICHINHOS"></Header>
+            <Header title="LISTAGEM DOS BICHINHOS"></Header>
             <FlatList
                 data={tamagochiList}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id.toString()}
                 contentContainerStyle={styles.list}
             />
-            <TouchableOpacity style={styles.addButton} onPress={() => { router.push("/TelasDoGame/RegistrationScreen") }}>
+            <TouchableOpacity style={styles.button} onPress={() => { router.push("/TelasDoGame/RegistrationScreen") }}>
                 <Ionicons name="add-outline" size={24} color="black" />
             </TouchableOpacity>
         </SafeAreaView>
@@ -119,13 +119,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 5
     },
-    addButton: {
+    button: {
         flexDirection: 'row',
         backgroundColor: '#f13601',
         padding: 20,
         borderRadius: 10,
         position: 'absolute',
-        bottom: 100,
+        bottom: 30,
         right: 20,
     },
 });

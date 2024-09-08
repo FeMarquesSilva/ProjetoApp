@@ -1,15 +1,20 @@
+import Header from "@/components/Header";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const DetailsScreen = () => {
     return (
-        <View>
-            <Text>Tela de Detalhes</Text>
-            <TouchableOpacity style={styles.button} onPress={() => { router.navigate("/MiniGames") }}>
-                <Ionicons name="game-controller" size={24} color="black" />
-            </TouchableOpacity>
-        </View>
+        <SafeAreaView>
+            <Header title="DETALHES"></Header>
+            <View>
+                <Text>Tela de Detalhes</Text>
+                <TouchableOpacity style={styles.button} onPress={() => { router.navigate("/MiniGames") }}>
+                    <Ionicons name="game-controller" size={24} color="black" />
+                </TouchableOpacity>
+            </View>
+        </SafeAreaView>
     );
 }
 

@@ -18,8 +18,6 @@ const RegistrationScreen = () => {
   const [image, setImage] = useState<number | null>(null)
   const { saveTamagochi } = useTodoDatabase();
 
-  
-
   const register = async () => {
     if (name.trim() === '') {
       alert("Por Favor preencha o nome e selecione um personagem");
