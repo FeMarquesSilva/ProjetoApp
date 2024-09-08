@@ -51,15 +51,17 @@ const Index = () => {
         const imageSource = bichinhoImages.find(img => img.id === Number(item.image))?.source;
 
         return (
-            <View style={styles.card}>
-                <Image source={imageSource} style={styles.image} />
-                <View style={styles.info}>
-                    <Text style={styles.name}>{item.name}</Text>
-                    <Text>Fome: {item.hunger}</Text>
-                    <Text>Sono: {item.sleep}</Text>
-                    <Text>Diversão: {item.fun}</Text>
+            <TouchableOpacity onPress={() => { router.navigate("/TelasDoGame/DetailsScreen") }}>
+                <View style={styles.card}>
+                    <Image source={imageSource} style={styles.image} />
+                    <View style={styles.info}>
+                        <Text style={styles.name}>{item.name}</Text>
+                        <Text>Fome: {item.hunger}</Text>
+                        <Text>Sono: {item.sleep}</Text>
+                        <Text>Diversão: {item.fun}</Text>
+                    </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         );
     };
 
@@ -75,12 +77,6 @@ const Index = () => {
             />
             <TouchableOpacity style={styles.addButton} onPress={() => { router.push("/TelasDoGame/RegistrationScreen") }}>
                 <Ionicons name="add-outline" size={24} color="black" />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => { router.navigate("/MiniGames") }}>
-                <Ionicons name="game-controller" size={24} color="black" />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => { router.navigate("/MiniGames") }}>
-                <Ionicons name="game-controller" size={24} color="black" />
             </TouchableOpacity>
         </SafeAreaView>
     );
@@ -122,15 +118,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 5
-    },
-    button: {
-        flexDirection: 'row',
-        backgroundColor: '#f13601',
-        padding: 20,
-        borderRadius: 10,
-        position: 'absolute',
-        bottom: 30,
-        right: 20,
     },
     addButton: {
         flexDirection: 'row',
