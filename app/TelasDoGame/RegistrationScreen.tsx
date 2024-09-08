@@ -28,7 +28,7 @@ const RegistrationScreen = () => {
       return
     }
     try {
-      const res = await saveTamagochi({ name: name, image: image, hunger: 100, sleep: 100, fun: 100 });
+      const res = await saveTamagochi({ name: name, image: image, hunger: 100, sleep: 100, fun: 100});
       router.navigate("/TelasDoGame")
       alert("Deu certo!")
       

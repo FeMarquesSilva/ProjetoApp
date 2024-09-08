@@ -25,8 +25,8 @@ export function useTodoDatabase() {
             await query.finalizeAsync()
         }
     }
-    // Função para buscar os bichinhos cadastrados no banco de dados
-    async function getTamagochi(): Promise<TamagochiList[]> {
+
+    async function getTamagochi() {
         try {
             const response = await database.getAllAsync<TamagochiList>(`SELECT * FROM tamagchis;`)
             return response
@@ -35,7 +35,7 @@ export function useTodoDatabase() {
         }
     }
 
-    //criando função para deletar a tabela de tamagochi
+    //criando função para deletar a tabela de tamagochi caso necessário;
     async function deleteTamagochi() {
         try {
             const query = await database.prepareAsync(`DELETE FROM tamagchis;`)
@@ -47,5 +47,5 @@ export function useTodoDatabase() {
     }
 
 
-    return { saveTamagochi, getTamagochi }
+    return { saveTamagochi, getTamagochi, deleteTamagochi }
 }
