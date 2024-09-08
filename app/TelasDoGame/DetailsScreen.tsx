@@ -4,10 +4,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import Header from '@/components/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTodoDatabase } from "../database/todoService"; // Importa a função do banco de dados
 
 const DetailsScreen = () => {
     const { id, name, image, hunger, sleep, fun } = useLocalSearchParams();
     const router = useRouter();
+
+    const { alterTamagochi, getTamagochi } = useTodoDatabase(); // Funções para manipular o banco
 
     // Converte os parâmetros para números
     const initialHunger = hunger ? Number(hunger) : 0;
@@ -40,9 +43,49 @@ const DetailsScreen = () => {
         return 'muito bem';
     };
 
-    // Funções para alimentar, dormir e brincar
-    const feedPet = () => setCurrentHunger(prev => Math.min(prev + 10, 100));
-    const letSleep = () => setCurrentSleep(prev => Math.min(prev + 10, 100));
+    // Função para alimentar o bichinho e atualizar o banco de dados
+    const feedPet = async () => {
+        const newHunger = Math.min(currentHunger + 10, 100);
+        setCurrentHunger(newHunger);
+
+        try {
+            // Atualiza o bichinho no banco de dados
+            const updatedTamagochi = {
+                id: Array.isArray(id) ? Number(id[0]) : Number(id),  // Converte id para número
+                name: Array.isArray(name) ? name[0] : name,          // Garante que o nome seja uma string
+                image: Array.isArray(image) ? Number(image[0]) : Number(image),  // Converte image para número
+                hunger: newHunger,
+                sleep: currentSleep,
+                fun: currentFun,
+                status: calculateStatus(),
+            };
+            await alterTamagochi(updatedTamagochi);
+        } catch (error) {
+            console.error("Erro ao alimentar o bichinho:", error);
+        }
+    };
+
+    // Função para deixar o bichinho dormir (apenas como exemplo)
+    const letSleep = async () => {
+        const newSleep = Math.min(currentSleep + 10, 100);
+        setCurrentSleep(newSleep);
+
+        try {
+            const updatedTamagochi = {
+                id: Array.isArray(id) ? Number(id[0]) : Number(id),  // Converte id para número
+                name: Array.isArray(name) ? name[0] : name,          // Garante que o nome seja uma string
+                image: Array.isArray(image) ? Number(image[0]) : Number(image),  // Converte image para número
+                hunger: currentHunger,
+                sleep: newSleep,
+                fun: currentFun,
+                status: calculateStatus(),
+            };
+            await alterTamagochi(updatedTamagochi);
+        } catch (error) {
+            console.error("Erro ao deixar o bichinho dormir:", error);
+        }
+    };
+
     const playWithPet = () => router.push("/MiniGames");
 
     // Atualiza os atributos ao longo do tempo (exemplo: diminui a cada hora)
@@ -51,7 +94,7 @@ const DetailsScreen = () => {
             setCurrentHunger(prev => Math.max(prev - 1, 0));
             setCurrentSleep(prev => Math.max(prev - 1, 0));
             setCurrentFun(prev => Math.max(prev - 1, 0));
-        }, 30000); // diminui 1 ponto a cada 30s
+        }, 30000); // diminui 1 ponto por hora
 
         return () => clearInterval(interval);
     }, []);
