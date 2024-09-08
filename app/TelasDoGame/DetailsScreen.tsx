@@ -110,13 +110,15 @@ const DetailsScreen = () => {
         <SafeAreaView style={styles.container}>
             <Header title="Detalhes do Bichinho" />
             <View style={styles.content}>
-                <Image source={imageSource} style={styles.image} />
-                <Text style={styles.name}>{name}</Text>
-                <View style={styles.attributes}>
-                    <Text>Fome: {currentHunger}</Text>
-                    <Text>Sono: {currentSleep}</Text>
-                    <Text>Diversão: {currentFun}</Text>
-                    <Text>Status: {calculateStatus()}</Text>
+                <View style={styles.cardLarge}>
+                    <Image source={imageSource} style={styles.image} />
+                    <Text style={styles.name}>{name}</Text>
+                </View>
+                <View style={styles.cardSmall}>
+                    <Text style={styles.attributeText}>Fome: {currentHunger}</Text>
+                    <Text style={styles.attributeText}>Sono: {currentSleep}</Text>
+                    <Text style={styles.attributeText}>Diversão: {currentFun}</Text>
+                    <Text style={styles.attributeText}>Status: {calculateStatus()}</Text>
                 </View>
                 <View style={styles.buttonsContainer}>
                     <TouchableOpacity style={styles.button} onPress={feedPet}>
@@ -125,8 +127,8 @@ const DetailsScreen = () => {
                     <TouchableOpacity style={styles.button} onPress={letSleep}>
                         <Text style={styles.buttonText}>Dormir</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity 
-                        style={styles.button} 
+                    <TouchableOpacity
+                        style={styles.button}
                         onPress={() => router.push({ pathname: "/MiniGames", params: { tamagochiId: tamagochiId } })}
                     >
                         <Ionicons name="game-controller" size={24} color="white" />
@@ -149,36 +151,55 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: 20,
     },
-    image: {
-        width: 150,
-        height: 150,
+    cardLarge: {
+        width: '90%',
+        backgroundColor: '#FFF',
+        borderRadius: 15,
+        alignItems: 'center',
+        padding: 20,
         marginBottom: 20,
+        elevation: 3,
+    },
+    image: {
+        width: 200,
+        height: 200,
+        marginBottom: 15,
     },
     name: {
-        fontSize: 24,
+        fontSize: 28,
         fontWeight: 'bold',
-        marginBottom: 10,
+        textAlign: 'center',
     },
-    attributes: {
-        alignItems: 'center',
+    cardSmall: {
+        width: '90%',
+        backgroundColor: '#FFF',
+        borderRadius: 15,
+        padding: 20,
         marginBottom: 20,
+        alignItems: 'center',
+        elevation: 3,
+    },
+    attributeText: {
+        fontSize: 18,
+        marginVertical: 5,
     },
     buttonsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         width: '100%',
+        marginTop: 20,
     },
     button: {
         backgroundColor: '#f13601',
-        padding: 10,
+        padding: 15,
         borderRadius: 10,
-        marginHorizontal: 5,
+        width: '30%',
         alignItems: 'center',
     },
     buttonText: {
         color: 'white',
-        fontSize: 16,
-    }
+        fontSize: 18,
+    },
 });
 
 export default DetailsScreen;
