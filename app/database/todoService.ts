@@ -25,8 +25,8 @@ export function useTodoDatabase() {
             await query.finalizeAsync()
         }
     }
-
-    async function getTamagochi() {
+    // Função para buscar os bichinhos cadastrados no banco de dados
+    async function getTamagochi(): Promise<TamagochiList[]> {
         try {
             const response = await database.getAllAsync<TamagochiList>(`SELECT * FROM tamagchis;`)
             return response
