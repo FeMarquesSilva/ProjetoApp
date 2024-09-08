@@ -30,7 +30,7 @@ const Index = () => {
 
     // Define o estado com o tipo TamagochiList[];
     const [tamagochiList, setTamagochiList] = useState<TamagochiList[]>([]);
-    const { getTamagochi } = useTodoDatabase();
+    const { getTamagochi, saveTamagochi } = useTodoDatabase();
 
     // Função para carregar as informações do banco e armazenar no estado;
     const list = async () => {
@@ -43,9 +43,47 @@ const Index = () => {
     };
 
     // Chama a função de listagem quando o componente for montado;
-    useEffect( () => {
+    useEffect(() => {
         list();
-    }, [tamagochiList]);
+    })
+
+    // Atualiza os atributos a cada hora
+    useEffect(() => {
+        const updateAttributes = async () => {
+            try {
+                const tamagochis = await getTamagochi();
+                const updatedTamagochis = tamagochis.map(tamagochi => {
+                    const updatedHunger = Math.max(tamagochi.hunger - 1, 0);
+                    const updatedSleep = Math.max(tamagochi.sleep - 1, 0);
+                    const updatedFun = Math.max(tamagochi.fun - 1, 0);
+
+                    const total = updatedHunger + updatedSleep + updatedFun;
+                    let status = '';
+                    if (total === 0) status = 'morto';
+                    else if (total <= 50) status = 'crítico';
+                    else if (total <= 100) status = 'muito triste';
+                    else if (total <= 150) status = 'triste';
+                    else if (total <= 200) status = 'ok';
+                    else if (total <= 250) status = 'bem';
+                    else status = 'muito bem';
+
+                    return { ...tamagochi, hunger: updatedHunger, sleep: updatedSleep, fun: updatedFun, status };
+                });
+
+                await Promise.all(updatedTamagochis.map(tamagochi =>
+                    saveTamagochi(tamagochi)
+                ));
+
+                setTamagochiList(updatedTamagochis); // Atualiza a lista no estado
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        const interval = setInterval(updateAttributes, 10000); // 1 hora -> 10s
+
+        return () => clearInterval(interval);
+    }, [getTamagochi, saveTamagochi]);
 
     // Renderiza cada tamagochi da lista;
     const renderItem = ({ item }: { item: TamagochiList }) => {

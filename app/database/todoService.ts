@@ -47,6 +47,17 @@ export function useTodoDatabase() {
         }
     }
 
+    //Função para atualizar as informações: 
+    async function alterTamagochi({ id, name, image, hunger, sleep, fun, status }: { id: number, name: string, image: number, hunger: number, sleep: number, fun: number, status: string }) {
+        const query = await database.prepareAsync(`UPDATE tamagchis SET name = $name, image = $image, hunger = $hunger, sleep = $sleep, fun = $fun, status = $status WHERE id = $id;`);
+        try {
+            await query.executeAsync({ $id: id, $name: name, $image: image, $hunger: hunger, $sleep: sleep, $fun: fun, $status: status });
+        } catch (error) {
+            throw error;
+        } finally {
+            await query.finalizeAsync();
+        }
+    }
 
-    return { saveTamagochi, getTamagochi, deleteTamagochi }
+    return { saveTamagochi, getTamagochi, deleteTamagochi, alterTamagochi }
 }
