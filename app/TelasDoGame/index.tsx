@@ -51,7 +51,7 @@ const Index = () => {
         const imageSource = bichinhoImages.find(img => img.id === Number(item.image))?.source;
 
         return (
-            <TouchableOpacity onPress={() => { router.navigate("/TelasDoGame/DetailsScreen") }}>
+            <TouchableOpacity onPress={() => { router.push("/TelasDoGame/DetailsScreen") }}>
                 <View style={styles.card}>
                     <Image source={imageSource} style={styles.image} />
                     <View style={styles.info}>

@@ -19,14 +19,21 @@ export default function TabLayout() {
         options={{
           title: 'Jogo da Velha',
           tabBarStyle: { display: 'none' },
-      }} 
+        }}
       />
       <Tabs.Screen
         name="RegistrationScreen"
         options={{
           title: 'Jogo da Velha',
           tabBarStyle: { display: 'none' },
-      }} 
+        }}
+      />
+      <Tabs.Screen
+        name="DetailsScreen"
+        options={{
+          title: 'Tela de Detalhes',
+          tabBarStyle: { display: 'none' },
+        }}
       />
     </Tabs>
   );
