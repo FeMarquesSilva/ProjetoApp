@@ -2,8 +2,7 @@ import Header from "@/components/Header";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const DetailsScreen = () => {
     const { id, name, image, hunger, sleep, fun } = useLocalSearchParams();
@@ -55,7 +54,7 @@ const DetailsScreen = () => {
 
     return (
         <View style={styles.container}>
-            <Header title="Detalhes do Bichinho" /> {/* Adicione o Header aqui */}
+            <Header title="Detalhes do Bichinho" />
             <Image source={imageSource} style={styles.image} />
             <Text style={styles.name}>{name}</Text>
 
