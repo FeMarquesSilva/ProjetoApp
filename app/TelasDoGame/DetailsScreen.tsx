@@ -1,11 +1,13 @@
-import Header from "@/components/Header";
-import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import Header from '@/components/Header';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-const DetailsScreen = () => {
+const detailsScreen = () => {
     const { id, name, image, hunger, sleep, fun } = useLocalSearchParams();
+    const router = useRouter(); // Correção aqui
 
     // Mapeia IDs para caminhos de imagem locais
     const bichinhoImages: { [key: number]: any } = {
@@ -53,8 +55,8 @@ const DetailsScreen = () => {
     const imageSource = bichinhoImages[Number(image)];
 
     return (
-        <View style={styles.container}>
-            <Header title="Detalhes do Bichinho" /> {/* Adicione o Header aqui */}
+        <SafeAreaView style={styles.container}>
+            <Header title="Detalhes do Bichinho" />
             <Image source={imageSource} style={styles.image} />
             <Text style={styles.name}>{name}</Text>
 
@@ -65,15 +67,15 @@ const DetailsScreen = () => {
             </View>
             <View>
                 <Text>Tela de Detalhes</Text>
-                <TouchableOpacity style={styles.button} onPress={() => { router.navigate("/MiniGames") }}>
+                <TouchableOpacity style={styles.button} onPress={() => router.push("/MiniGames")}>
                     <Ionicons name="game-controller" size={24} color="black" />
                 </TouchableOpacity>
             </View>
-        </View>
+        </SafeAreaView>
     );
 };
 
-export default DetailsScreen;
+export default detailsScreen;
 
 const styles = StyleSheet.create({
     container: {

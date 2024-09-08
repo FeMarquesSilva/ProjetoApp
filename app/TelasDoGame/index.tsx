@@ -78,7 +78,7 @@ const Index = () => {
                 keyExtractor={(item) => item.id.toString()}
                 contentContainerStyle={styles.list}
             />
-            <TouchableOpacity style={styles.button} onPress={() => { router.push("/TelasDoGame/registrationScreen") }}>
+            <TouchableOpacity style={styles.button} onPress={() => { router.push("/TelasDoGame/RegistrationScreen") }}>
                 <Ionicons name="add-outline" size={24} color="black" />
             </TouchableOpacity>
         </SafeAreaView>
