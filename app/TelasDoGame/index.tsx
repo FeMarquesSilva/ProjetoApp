@@ -80,7 +80,7 @@ const Index = () => {
             }
         };
     
-        const interval = setInterval(atualizarAtributos, 10000); // 1 hora -> 10s
+        const interval = setInterval(atualizarAtributos, 30000); // 30s
     
         return () => clearInterval(interval);
     }, [getTamagochi, alterTamagochi]);

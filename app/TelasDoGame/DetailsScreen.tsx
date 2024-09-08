@@ -51,7 +51,7 @@ const DetailsScreen = () => {
             setCurrentHunger(prev => Math.max(prev - 1, 0));
             setCurrentSleep(prev => Math.max(prev - 1, 0));
             setCurrentFun(prev => Math.max(prev - 1, 0));
-        }, 3600000); // diminui 1 ponto por hora
+        }, 30000); // diminui 1 ponto a cada 30s
 
         return () => clearInterval(interval);
     }, []);
