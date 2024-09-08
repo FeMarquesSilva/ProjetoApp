@@ -15,7 +15,7 @@ type Bichinho = {
     imagem: any
 }
 
-
+//Crio o tipagem da minha array de objetos que vou puxar do banco de dados;
 type TamagochiList = {
     id: number;
     name: string;
@@ -25,6 +25,15 @@ type TamagochiList = {
     fun: number;
 };
 
+//Faço uma array com o caminho das minhas imagens;
+const bichinhoImages = [
+    { id: 1, source: require('@/assets/images/bichinho.png') },
+    { id: 2, source: require('@/assets/images/bichinho2.png') },
+    { id: 3, source: require('@/assets/images/bichinho3.png') },
+    { id: 4, source: require('@/assets/images/bichinho4.png') },
+    { id: 5, source: require('@/assets/images/bichinho5.png') },
+];
+
 const bichinhoData: Bichinho[] = [
     { id: 1, name: 'Bichinho 1', fome: 70, sono: 50, diversao: 80, status: 'ok', imagem: require('@/assets/images/bichinho.png') },
     { id: 2, name: 'Bichinho 2', fome: 80, sono: 20, diversao: 50, status: 'bem', imagem: require('@/assets/images/bichinho2.png') },
@@ -32,6 +41,20 @@ const bichinhoData: Bichinho[] = [
 
 const Index = () => {
 
+    // Define o estado com o tipo TamagochiList[]
+    const [tamagochiList, setTamagochiList] = useState<TamagochiList[]>([]);
+    const { getTamagochi } = useTodoDatabase();
+
+
+    // Função para carregar as informações do banco e armazenar no estado
+    const list = async () => {
+        try {
+            const response: TamagochiList[] = await getTamagochi();
+            setTamagochiList(response);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     const [bichinhos, setBichinhos] = useState<Bichinho[]>([]);
 
