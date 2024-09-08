@@ -43,9 +43,9 @@ const Index = () => {
     };
 
     // Chama a função de listagem quando o componente for montado;
-    useEffect(() => {
+    useEffect( () => {
         list();
-    }, []);
+    }, [tamagochiList]);
 
     // Renderiza cada tamagochi da lista;
     const renderItem = ({ item }: { item: TamagochiList }) => {
