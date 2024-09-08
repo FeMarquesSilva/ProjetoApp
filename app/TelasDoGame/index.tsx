@@ -56,7 +56,7 @@ const Index = () => {
                     const updatedHunger = Math.max(tamagochi.hunger - 1, 0);
                     const updatedSleep = Math.max(tamagochi.sleep - 1, 0);
                     const updatedFun = Math.max(tamagochi.fun - 1, 0);
-    
+
                     const total = updatedHunger + updatedSleep + updatedFun;
                     let status = '';
                     if (total === 0) status = 'morto';
@@ -66,22 +66,22 @@ const Index = () => {
                     else if (total <= 200) status = 'ok';
                     else if (total <= 250) status = 'bem';
                     else status = 'muito bem';
-    
+
                     return { ...tamagochi, hunger: updatedHunger, sleep: updatedSleep, fun: updatedFun, status };
                 });
-    
+
                 await Promise.all(updatedTamagochis.map(tamagochi =>
                     alterTamagochi(tamagochi)
                 ));
-    
+
                 setTamagochiList(updatedTamagochis); // Atualiza a lista no estado
             } catch (error) {
                 console.error(error);
             }
         };
-    
+
         const interval = setInterval(atualizarAtributos, 30000); // 30s
-    
+
         return () => clearInterval(interval);
     }, [getTamagochi, alterTamagochi]);
 
@@ -91,7 +91,7 @@ const Index = () => {
 
         return (
             //Retorno a visualização dos cardas com o opção de touch para ir nos detalhes dos bichinhos;
-            <TouchableOpacity onPress={() => { router.push(`/TelasDoGame/detailsScreen?id=${item.id}&name=${item.name}&image=${item.image}&hunger=${item.hunger}&sleep=${item.sleep}&fun=${item.fun}`) }}>
+            <TouchableOpacity onPress={() => { router.push(`/TelasDoGame/DetailsScreen?id=${item.id}&name=${item.name}&image=${item.image}&hunger=${item.hunger}&sleep=${item.sleep}&fun=${item.fun}`) }}>
                 <View style={styles.card}>
                     <Image source={imageSource} style={styles.image} />
                     <View style={styles.info}>
