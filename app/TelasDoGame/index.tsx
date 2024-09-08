@@ -52,7 +52,11 @@ const Index = () => {
 
         return (
             <View style={styles.card}>
-                <Image source={imageSource} style={styles.image} />
+                {imageSource ? (
+                    <Image source={imageSource} style={styles.image} />
+                ) : (
+                    <Text>Imagem não encontrada</Text>
+                )}
                 <View style={styles.info}>
                     <Text style={styles.name}>{item.name}</Text>
                     <Text>Fome: {item.hunger}</Text>
@@ -75,9 +79,6 @@ const Index = () => {
             />
             <TouchableOpacity style={styles.addButton} onPress={() => { router.push("/TelasDoGame/RegistrationScreen") }}>
                 <Ionicons name="add-outline" size={24} color="black" />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => { router.navigate("/MiniGames") }}>
-                <Ionicons name="game-controller" size={24} color="black" />
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => { router.navigate("/MiniGames") }}>
                 <Ionicons name="game-controller" size={24} color="black" />
