@@ -37,7 +37,7 @@ const Index = () => {
             const response = await getTamagochi();
             setTamagochiList(response);
         } catch (error) {
-            console.error("Error loading tamagchi list:", error);
+            console.error(error);
         }
     };
 

@@ -20,7 +20,7 @@ export function useTodoDatabase() {
         try {
             await query.executeAsync({ $name: name, $image: image, $hunger: hunger, $sleep: sleep, $fun: fun })
         } catch (error) {
-            console.error("Error saving tamagochi:", error);
+            throw error;
         } finally {
             await query.finalizeAsync()
         }
@@ -31,7 +31,6 @@ export function useTodoDatabase() {
             const response = await database.getAllAsync<TamagochiList>(`SELECT * FROM tamagchis;`)
             return response
         } catch (error) {
-            console.error("Error fetching tamagchis:", error);
             throw error;
         }
     }
