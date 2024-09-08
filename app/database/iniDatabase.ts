@@ -8,7 +8,8 @@ export async function initiDatabase(database: SQLiteDatabase) {
             image INTEGER,  -- ID da imagem do bichinho
             hunger INTEGER DEFAULT 100, -- Atributo de Fome
             sleep INTEGER DEFAULT 100,  -- Atributo de Sono
-            fun INTEGER DEFAULT 100    -- Atributo de Diversão
+            fun INTEGER DEFAULT 100,    -- Atributo de Diversão
+            status TEXT
         );
     `);
 }

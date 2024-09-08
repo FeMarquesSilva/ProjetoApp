@@ -7,13 +7,14 @@ import { useTodoDatabase } from "../database/todoService";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 //Crio o tipagem da minha array de objetos que vou puxar do banco de dados;
-type tamagochiList = {
+type TamagochiList = {
     id: number;
     name: string;
     image: number;
     hunger: number;
     sleep: number;
     fun: number;
+    status: string;
 };
 
 //Faço uma array com o caminho das minhas imagens;
@@ -28,13 +29,13 @@ const bichinhoImages = [
 const Index = () => {
 
     // Define o estado com o tipo TamagochiList[];
-    const [tamagochiList, setTamagochiList] = useState<tamagochiList[]>([]);
+    const [tamagochiList, setTamagochiList] = useState<TamagochiList[]>([]);
     const { getTamagochi } = useTodoDatabase();
 
     // Função para carregar as informações do banco e armazenar no estado;
     const list = async () => {
         try {
-            const response: tamagochiList[] = await getTamagochi();
+            const response: TamagochiList[] = await getTamagochi();
             setTamagochiList(response);
         } catch (error) {
             console.error(error);
@@ -47,7 +48,7 @@ const Index = () => {
     }, []);
 
     // Renderiza cada tamagochi da lista;
-    const renderItem = ({ item }: { item: tamagochiList }) => {
+    const renderItem = ({ item }: { item: TamagochiList }) => {
         const imageSource = bichinhoImages.find(img => img.id === Number(item.image))?.source;
 
         return (
@@ -60,6 +61,7 @@ const Index = () => {
                         <Text>Fome: {item.hunger}</Text>
                         <Text>Sono: {item.sleep}</Text>
                         <Text>Diversão: {item.fun}</Text>
+                        <Text>Status: {item.status}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
