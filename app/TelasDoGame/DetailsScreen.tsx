@@ -7,7 +7,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const DetailsScreen = () => {
     const { id, name, image, hunger, sleep, fun } = useLocalSearchParams();
-    const router = useRouter(); // Correção aqui
+    const router = useRouter();
+
+    // Converte os parâmetros para números
+    const initialHunger = hunger ? Number(hunger) : 0;
+    const initialSleep = sleep ? Number(sleep) : 0;
+    const initialFun = fun ? Number(fun) : 0;
 
     // Mapeia IDs para caminhos de imagem locais
     const bichinhoImages: { [key: number]: any } = {
@@ -19,9 +24,9 @@ const DetailsScreen = () => {
     };
 
     // Estado para armazenar os atributos do bichinho
-    const [currentHunger, setCurrentHunger] = useState(Number(hunger));
-    const [currentSleep, setCurrentSleep] = useState(Number(sleep));
-    const [currentFun, setCurrentFun] = useState(Number(fun));
+    const [currentHunger, setCurrentHunger] = useState(initialHunger);
+    const [currentSleep, setCurrentSleep] = useState(initialSleep);
+    const [currentFun, setCurrentFun] = useState(initialFun);
 
     // Função para calcular o status do bichinho
     const calculateStatus = () => {
@@ -38,15 +43,15 @@ const DetailsScreen = () => {
     // Funções para alimentar, dormir e brincar
     const feedPet = () => setCurrentHunger(prev => Math.min(prev + 10, 100));
     const letSleep = () => setCurrentSleep(prev => Math.min(prev + 10, 100));
-    const playWithPet = () => setCurrentFun(prev => Math.min(prev + 10, 100));
+    const playWithPet = () => router.push("/MiniGames");
 
-    // Atualiza os atributos ao longo do tempo (exemplo: diminui a cada minuto)
+    // Atualiza os atributos ao longo do tempo (exemplo: diminui a cada hora)
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentHunger(prev => Math.max(prev - 1, 0));
             setCurrentSleep(prev => Math.max(prev - 1, 0));
             setCurrentFun(prev => Math.max(prev - 1, 0));
-        }, 60000); // diminui 1 ponto por minuto (você pode ajustar o tempo)
+        }, 3600000); // diminui 1 ponto por hora
 
         return () => clearInterval(interval);
     }, []);
@@ -57,32 +62,41 @@ const DetailsScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
             <Header title="Detalhes do Bichinho" />
-            <Image source={imageSource} style={styles.image} />
-            <Text style={styles.name}>{name}</Text>
-
-            <View style={styles.attributes}>
-                <Text>Fome: {currentHunger}</Text>
-                <Text>Sono: {currentSleep}</Text>
-                <Text>Diversão: {currentFun}</Text>
-            </View>
-            <View>
-                <Text>Tela de Detalhes</Text>
-                <TouchableOpacity style={styles.button} onPress={() => router.push("/MiniGames")}>
-                    <Ionicons name="game-controller" size={24} color="black" />
-                </TouchableOpacity>
+            <View style={styles.content}>
+                <Image source={imageSource} style={styles.image} />
+                <Text style={styles.name}>{name}</Text>
+                <View style={styles.attributes}>
+                    <Text>Fome: {currentHunger}</Text>
+                    <Text>Sono: {currentSleep}</Text>
+                    <Text>Diversão: {currentFun}</Text>
+                    <Text>Status: {calculateStatus()}</Text>
+                </View>
+                <View style={styles.buttonsContainer}>
+                    <TouchableOpacity style={styles.button} onPress={feedPet}>
+                        <Text style={styles.buttonText}>Alimentar</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={letSleep}>
+                        <Text style={styles.buttonText}>Dormir</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={playWithPet}>
+                        <Ionicons name="game-controller" size={24} color="white" />
+                    </TouchableOpacity>
+                </View>
             </View>
         </SafeAreaView>
     );
 };
 
-export default DetailsScreen;
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#FF8433',
+    },
+    content: {
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#FF8433',
+        paddingHorizontal: 20,
     },
     image: {
         width: 150,
@@ -92,19 +106,28 @@ const styles = StyleSheet.create({
     name: {
         fontSize: 24,
         fontWeight: 'bold',
+        marginBottom: 10,
     },
     attributes: {
+        alignItems: 'center',
         marginBottom: 20,
     },
     buttonsContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '80%',
+        justifyContent: 'space-around',
+        width: '100%',
     },
     button: {
         backgroundColor: '#f13601',
         padding: 10,
         borderRadius: 10,
-        marginHorizontal: 10,
+        marginHorizontal: 5,
+        alignItems: 'center',
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 16,
     }
 });
+
+export default DetailsScreen;
