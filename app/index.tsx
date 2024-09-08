@@ -25,7 +25,7 @@ const Index = () => {
     }, []);
 
     //Função para ao carregar 100% o botão "Jogar" fique acessivel para o jogador;
-    const handlePlayPress = () => {
+    const liberarStart = () => {
         if (loadingComplete) {
           router.navigate("/TelasDoGame");
         }
@@ -41,7 +41,7 @@ const Index = () => {
           <Text style={styles.progressText}>{Math.round(progress)}%</Text>
           <TouchableOpacity
             style={[styles.button, { backgroundColor: loadingComplete ? '#28a745' : '#6c757d' }]}
-            onPress={handlePlayPress}
+            onPress={liberarStart}
             disabled={!loadingComplete}
           >
             <Text style={styles.buttonText}>Jogar</Text>
