@@ -30,8 +30,7 @@ const RegistrationScreen = () => {
     try {
       const res = await saveTamagochi({ name: name, image: image, hunger: 100, sleep: 100, fun: 100, status: 'Muito bem'});
       router.navigate("/TelasDoGame")
-      alert("Deu certo!")
-      
+      alert("Seu novo tamagochi está cadastrado!")
     } catch (error) {
       console.error(error)
     }

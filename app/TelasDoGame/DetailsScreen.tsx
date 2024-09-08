@@ -5,7 +5,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import Header from '@/components/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const detailsScreen = () => {
+const DetailsScreen = () => {
     const { id, name, image, hunger, sleep, fun } = useLocalSearchParams();
     const router = useRouter(); // Correção aqui
 
@@ -75,7 +75,7 @@ const detailsScreen = () => {
     );
 };
 
-export default detailsScreen;
+export default DetailsScreen;
 
 const styles = StyleSheet.create({
     container: {
