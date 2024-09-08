@@ -16,7 +16,7 @@ const bichinhoImages = [
 const RegistrationScreen = () => {
   const [name, setName] = useState<string>('')
   const [image, setImage] = useState<number | null>(null)
-  const { saveTamagochi, deleteTamagochi } = useTodoDatabase();
+  const { saveTamagochi } = useTodoDatabase();
 
   const register = async () => {
     if (name.trim() === '') {
@@ -34,10 +34,6 @@ const RegistrationScreen = () => {
     } catch (error) {
       console.error(error)
     }
-  }
-
-  const deletarTabela = () => {
-    deleteTamagochi()
   }
 
   return (
@@ -58,9 +54,6 @@ const RegistrationScreen = () => {
         />
         <TouchableOpacity style={styles.buttonAdd} onPress={() => {register()}}>
           <Text style={styles.buttonText}>Cadastrar Bichinho</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonAdd} onPress={() => {deletarTabela()}}>
-          <Text style={styles.buttonText}>Apagar tabela</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
