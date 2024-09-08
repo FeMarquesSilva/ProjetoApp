@@ -3,7 +3,8 @@ import { Text, View } from "react-native";
 const DetailsScreen = () => {
     return (
         <View>
-            <Text>Details Screen</Text>
+            <Text>Tela de Detalhes</Text>
+
         </View>
     );
 }

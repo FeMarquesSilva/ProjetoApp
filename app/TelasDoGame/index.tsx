@@ -51,19 +51,21 @@ const Index = () => {
         const imageSource = bichinhoImages.find(img => img.id === Number(item.image))?.source;
 
         return (
-            <View style={styles.card}>
-                {imageSource ? (
-                    <Image source={imageSource} style={styles.image} />
-                ) : (
-                    <Text>Imagem não encontrada</Text>
-                )}
-                <View style={styles.info}>
-                    <Text style={styles.name}>{item.name}</Text>
-                    <Text>Fome: {item.hunger}</Text>
-                    <Text>Sono: {item.sleep}</Text>
-                    <Text>Diversão: {item.fun}</Text>
+            <TouchableOpacity onPress={() => router.push({ pathname: "/TelasDoGame/", params: { id: item.id } })}>
+                <View style={styles.card}>
+                    {imageSource ? (
+                        <Image source={imageSource} style={styles.image} />
+                    ) : (
+                        <Text>Imagem não encontrada</Text>
+                    )}
+                    <View style={styles.info}>
+                        <Text style={styles.name}>{item.name}</Text>
+                        <Text>Fome: {item.hunger}</Text>
+                        <Text>Sono: {item.sleep}</Text>
+                        <Text>Diversão: {item.fun}</Text>
+                    </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         );
     };
 
