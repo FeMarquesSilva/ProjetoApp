@@ -2,7 +2,7 @@ import { router } from "expo-router";
 import { useEffect } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 
-const index = () => {
+const Index = () => {
 
     return (
         <View style={styles.container}>
@@ -12,7 +12,7 @@ const index = () => {
     );
 }
 
-export default index;
+export default Index;
 
 const styles = StyleSheet.create({
     container: {
