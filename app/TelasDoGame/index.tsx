@@ -49,6 +49,7 @@ const Index = () => {
     // Renderiza cada tamagochi da lista
     const renderItem = ({ item }: { item: TamagochiList }) => {
         const imageSource = bichinhoImages.find(img => img.id === item.image)?.source;
+        console.error(bichinhoImages)
 
         return (
             <View style={styles.card}>

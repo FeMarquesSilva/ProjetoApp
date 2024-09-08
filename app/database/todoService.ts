@@ -35,5 +35,17 @@ export function useTodoDatabase() {
         }
     }
 
+    //criando função para deletar a tabela de tamagochi
+    async function deleteTamagochi() {
+        try {
+            const query = await database.prepareAsync(`DELETE FROM tamagchis;`)
+            await query.executeAsync()
+            await query.finalizeAsync()
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
     return { saveTamagochi, getTamagochi }
 }
