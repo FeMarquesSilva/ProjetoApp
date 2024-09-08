@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import { useState } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type Player = "0" | "X"
 
@@ -26,11 +27,9 @@ const JogoDaVelha = () => {
 
     //Componentes necessários;
     const [vencedor, setVencedor] = useState<string | null>(null);
-    const [reset, setReset] = useState(false);
     const [jogador1Score, setJogador1Score] = useState(0);
     const [jogador2Score, setJogador2Score] = useState(0);
     const [jogadorTurn, setJogadorTurn] = useState("X");
-    const [jogador2Turn, setJogador2Turn] = useState(false);
     const [jogador1Name, setJogador1Name] = useState('Player1');
     const [jogador2Name, setJogador2Name] = useState('Player2');
     const [jogada, setJogada] = useState<{ [key: string]: Player }>({})
@@ -100,27 +99,29 @@ const JogoDaVelha = () => {
     }
 
     return (
-        <View style={styles.containerBody}>
-            <Header title="JOGO DA VELHA"></Header>
-            <View style={styles.container}>
-                <View style={styles.info}>
-                    <View style={styles.infoItem}>
-                        <Text style={styles.infoText}>Vitórias {jogador1Name}: {jogador1Score}</Text>
+        <SafeAreaView style={styles.containerBody}>
+            <View>
+                <Header title="JOGO DA VELHA"></Header>
+                <View style={styles.container}>
+                    <View style={styles.info}>
+                        <View style={styles.infoItem}>
+                            <Text style={styles.infoText}>Vitórias {jogador1Name}: {jogador1Score}</Text>
+                        </View>
+                        <View style={styles.infoItem}>
+                            <Text style={styles.infoText}>Vitórias {jogador2Name}: {jogador2Score}</Text>
+                        </View>
                     </View>
-                    <View style={styles.infoItem}>
-                        <Text style={styles.infoText}>Vitórias {jogador2Name}: {jogador2Score}</Text>
+                    <Button title="Reiniciar Pontuações" onPress={reiniciarPontuação} />
+                    <Text style={styles.playerTurn}>Jogador da vez: {jogadorDaVez()}</Text>
+                    <View style={styles.board}>
+                        {tabuleiro().map((_, i) => (
+                            <Text key={i} style={styles.cell} onPress={() => play(i)}>{jogada[i]}</Text>
+                        ))}
                     </View>
+                    <Button title="Reiniciar Partida" onPress={reiniciarPartida} />
                 </View>
-                <Button title="Reiniciar Pontuações" onPress={reiniciarPontuação} />
-                <Text style={styles.playerTurn}>Jogador da vez: {jogadorDaVez()}</Text>
-                <View style={styles.board}>
-                    {tabuleiro().map((_, i) => (
-                        <Text key={i} style={styles.cell} onPress={() => play(i)}>{jogada[i]}</Text>
-                    ))}
-                </View>
-                <Button title="Reiniciar Partida" onPress={reiniciarPartida} />
             </View>
-        </View>
+        </SafeAreaView>
     );
 }
 

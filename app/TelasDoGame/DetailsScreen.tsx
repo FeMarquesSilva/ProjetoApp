@@ -9,7 +9,6 @@ const DetailsScreen = () => {
         <SafeAreaView>
             <Header title="DETALHES"></Header>
             <View>
-                <Text>Tela de Detalhes</Text>
                 <TouchableOpacity style={styles.button} onPress={() => { router.navigate("/MiniGames") }}>
                     <Ionicons name="game-controller" size={24} color="black" />
                 </TouchableOpacity>

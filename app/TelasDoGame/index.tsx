@@ -7,7 +7,7 @@ import { useTodoDatabase } from "../database/todoService";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 //Crio o tipagem da minha array de objetos que vou puxar do banco de dados;
-type TamagochiList = {
+type tamagochiList = {
     id: number;
     name: string;
     image: number;
@@ -27,31 +27,32 @@ const bichinhoImages = [
 
 const Index = () => {
 
-    // Define o estado com o tipo TamagochiList[]
-    const [tamagochiList, setTamagochiList] = useState<TamagochiList[]>([]);
+    // Define o estado com o tipo TamagochiList[];
+    const [tamagochiList, setTamagochiList] = useState<tamagochiList[]>([]);
     const { getTamagochi } = useTodoDatabase();
 
-    // Função para carregar as informações do banco e armazenar no estado
+    // Função para carregar as informações do banco e armazenar no estado;
     const list = async () => {
         try {
-            const response: TamagochiList[] = await getTamagochi();
+            const response: tamagochiList[] = await getTamagochi();
             setTamagochiList(response);
         } catch (error) {
             console.error(error);
         }
     };
 
-    // Chama a função de listagem quando o componente for montado
+    // Chama a função de listagem quando o componente for montado;
     useEffect(() => {
         list();
     }, []);
 
-    // Renderiza cada tamagochi da lista
-    const renderItem = ({ item }: { item: TamagochiList }) => {
+    // Renderiza cada tamagochi da lista;
+    const renderItem = ({ item }: { item: tamagochiList }) => {
         const imageSource = bichinhoImages.find(img => img.id === Number(item.image))?.source;
 
         return (
-            <TouchableOpacity onPress={() => { router.push("/TelasDoGame/DetailsScreen") }}>
+            //Retorno a visualização dos cardas com o opção de touch para ir nos detalhes dos bichinhos;
+            <TouchableOpacity onPress={() => { router.push("/TelasDoGame/detailsScreen") }}>
                 <View style={styles.card}>
                     <Image source={imageSource} style={styles.image} />
                     <View style={styles.info}>
@@ -75,7 +76,7 @@ const Index = () => {
                 keyExtractor={(item) => item.id.toString()}
                 contentContainerStyle={styles.list}
             />
-            <TouchableOpacity style={styles.button} onPress={() => { router.push("/TelasDoGame/RegistrationScreen") }}>
+            <TouchableOpacity style={styles.button} onPress={() => { router.push("/TelasDoGame/registrationScreen") }}>
                 <Ionicons name="add-outline" size={24} color="black" />
             </TouchableOpacity>
         </SafeAreaView>
