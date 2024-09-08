@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -55,7 +56,7 @@ const DetailsScreen = () => {
     return (
         <View style={styles.container}>
             <Header title="Detalhes do Bichinho" /> {/* Adicione o Header aqui */}
-            <Image source={imageSource} style={styles.image} />
+            
             <Text style={styles.name}>{name}</Text>
 
             <View style={styles.attributes}>
