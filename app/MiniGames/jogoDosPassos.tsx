@@ -1,8 +1,10 @@
 import Header from "@/components/Header";
+import { useRoute } from "@react-navigation/native";
 import { Accelerometer, AccelerometerMeasurement } from "expo-sensors";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTodoDatabase } from "../database/todoService";
 
 const jogoDosPassos = () => {
     const [stepCount, setStepCount] = useState<number>(0);
@@ -11,6 +13,39 @@ const jogoDosPassos = () => {
     const [challengeStarted, setChallengeStarted] = useState<boolean>(false);
     const [targetSteps, setTargetSteps] = useState<number>(0);
     const [targetTime, setTargetTime] = useState<number>(0);
+    const { getTamagochi, alterTamagochi } = useTodoDatabase();
+
+    const route = useRoute();
+    const { tamagochiId } = route.params as { tamagochiId: string };
+    const id = Number(tamagochiId); // Converte o ID do bichinho para número
+
+    // Atualiza a diversão do bichinho a cada segundo
+    const atualizarDiversao = useCallback(async () => {
+        try {
+            const tamagochis = await getTamagochi();
+            const tamagochi = tamagochis.find(t => t.id === id);
+            if (tamagochi) {
+                const updatedFun = Math.min(tamagochi.fun + 1, 100);
+                await alterTamagochi({
+                    id: tamagochi.id,
+                    name: tamagochi.name,
+                    image: tamagochi.image,
+                    hunger: tamagochi.hunger,
+                    sleep: tamagochi.sleep,
+                    fun: updatedFun,
+                    status: tamagochi.status,
+                });
+            }
+        } catch (error) {
+            console.error("Erro ao atualizar a diversão do bichinho:", error);
+        }
+    }, [getTamagochi, alterTamagochi, id]);
+
+    useEffect(() => {
+        const interval = setInterval(atualizarDiversao, 1000); // Atualiza a diversão a cada segundo
+
+        return () => clearInterval(interval); // Limpa o intervalo ao desmontar o componente
+    }, [atualizarDiversao]);
 
     useEffect(() => {
         let interval: NodeJS.Timeout | null = null;
