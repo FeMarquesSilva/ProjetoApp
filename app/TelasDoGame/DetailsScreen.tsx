@@ -56,7 +56,7 @@ const DetailsScreen = () => {
     return (
         <View style={styles.container}>
             <Header title="Detalhes do Bichinho" /> {/* Adicione o Header aqui */}
-            
+            <Image source={imageSource} style={styles.image} />
             <Text style={styles.name}>{name}</Text>
 
             <View style={styles.attributes}>
