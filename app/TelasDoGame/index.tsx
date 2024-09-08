@@ -6,7 +6,6 @@ import Header from "@/components/Header";
 import { useTodoDatabase } from "../database/todoService";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-//Crio o tipagem da minha array de objetos que vou puxar do banco de dados;
 type TamagochiList = {
     id: number;
     name: string;
@@ -17,7 +16,6 @@ type TamagochiList = {
     status: string;
 };
 
-//Faço uma array com o caminho das minhas imagens;
 const bichinhoImages = [
     { id: 1, source: require('@/assets/images/bichinho.png') },
     { id: 2, source: require('@/assets/images/bichinho2.png') },
@@ -27,12 +25,10 @@ const bichinhoImages = [
 ];
 
 const Index = () => {
-
-    // Define o estado com o tipo TamagochiList[];
     const [tamagochiList, setTamagochiList] = useState<TamagochiList[]>([]);
     const { getTamagochi, alterTamagochi } = useTodoDatabase();
 
-    // Função para carregar as informações do banco e armazenar no estado;
+    // Função para carregar as informações do banco e armazenar no estado
     const list = async () => {
         try {
             const response: TamagochiList[] = await getTamagochi();
@@ -42,12 +38,12 @@ const Index = () => {
         }
     };
 
-    // Chama a função de listagem quando o componente for montado;
+    // Chama a função de listagem quando o componente for montado
     useEffect(() => {
         list();
-    }, [tamagochiList])
+    }, []);
 
-    // Atualiza os atributos a cada hora
+    // Atualiza os atributos a cada 3 segundos
     useEffect(() => {
         const atualizarAtributos = async () => {
             try {
@@ -80,17 +76,16 @@ const Index = () => {
             }
         };
     
-        const interval = setInterval(atualizarAtributos, 30000); // 30s
+        const interval = setInterval(atualizarAtributos, 3000); // Atualiza a cada 3 segundos
     
-        return () => clearInterval(interval);
+        return () => clearInterval(interval); // Limpa o intervalo ao desmontar o componente
     }, [getTamagochi, alterTamagochi]);
 
-    // Renderiza cada tamagochi da lista;
+    // Renderiza cada tamagochi da lista
     const renderItem = ({ item }: { item: TamagochiList }) => {
         const imageSource = bichinhoImages.find(img => img.id === Number(item.image))?.source;
 
         return (
-            //Retorno a visualização dos cardas com o opção de touch para ir nos detalhes dos bichinhos;
             <TouchableOpacity onPress={() => { router.push(`/TelasDoGame/detailsScreen?id=${item.id}&name=${item.name}&image=${item.image}&hunger=${item.hunger}&sleep=${item.sleep}&fun=${item.fun}`) }}>
                 <View style={styles.card}>
                     <Image source={imageSource} style={styles.image} />
@@ -105,7 +100,6 @@ const Index = () => {
             </TouchableOpacity>
         );
     };
-
 
     return (
         <SafeAreaView style={styles.container}>
