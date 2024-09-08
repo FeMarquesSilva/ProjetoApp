@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import Header from '@/components/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -122,9 +122,11 @@ const DetailsScreen = () => {
                 </View>
                 <View style={styles.buttonsContainer}>
                     <TouchableOpacity style={styles.button} onPress={feedPet}>
+                        <Ionicons name="fast-food-outline" size={24} color="white" />
                         <Text style={styles.buttonText}>Alimentar</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={letSleep}>
+                        <MaterialCommunityIcons name="sleep" size={24} color="white" />
                         <Text style={styles.buttonText}>Dormir</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
