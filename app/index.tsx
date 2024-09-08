@@ -1,8 +1,27 @@
 import { router } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 
 const Index = () => {
+
+    const [progress, setProgress] = useState(0);
+    const [loadingComplete, setLoadingComplete] = useState(false);
+    
+    // Simula o carregamento
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setProgress(prevProgress => {
+                if (prevProgress >= 100) {
+                    clearInterval(interval);
+                    setLoadingComplete(true);
+                    return 100;
+                }
+                return prevProgress + 1;
+            });
+        }, 30); // Ajuste o intervalo para controlar a velocidade do carregamento
+
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <View style={styles.container}>
