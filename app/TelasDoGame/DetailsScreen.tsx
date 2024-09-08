@@ -11,10 +11,8 @@ const DetailsScreen = () => {
     const router = useRouter();
     const { alterTamagochi, getTamagochi } = useTodoDatabase(); // Funções para manipular o banco de dados
 
-    // Converte o parâmetro 'id' para número
     const tamagochiId = id ? Number(id) : 0;
 
-    // Mapeia IDs para caminhos de imagem locais
     const bichinhoImages: { [key: number]: any } = {
         1: require('@/assets/images/bichinho.png'),
         2: require('@/assets/images/bichinho2.png'),
@@ -23,12 +21,10 @@ const DetailsScreen = () => {
         5: require('@/assets/images/bichinho5.png'),
     };
 
-    // Estado para armazenar os atributos do bichinho
     const [currentHunger, setCurrentHunger] = useState<number>(0);
     const [currentSleep, setCurrentSleep] = useState<number>(0);
     const [currentFun, setCurrentFun] = useState<number>(0);
 
-    // Função para calcular o status do bichinho
     const calculateStatus = () => {
         const total = currentHunger + currentSleep + currentFun;
         if (total === 0) return 'morto';
@@ -40,7 +36,6 @@ const DetailsScreen = () => {
         return 'muito bem';
     };
 
-    // Função para alimentar o bichinho e atualizar o banco de dados
     const feedPet = async () => {
         const newHunger = Math.min(currentHunger + 10, 100);
         setCurrentHunger(newHunger);
@@ -61,7 +56,6 @@ const DetailsScreen = () => {
         }
     };
 
-    // Função para deixar o bichinho dormir
     const letSleep = async () => {
         const newSleep = Math.min(currentSleep + 10, 100);
         setCurrentSleep(newSleep);
@@ -82,7 +76,6 @@ const DetailsScreen = () => {
         }
     };
 
-    // Função para buscar os dados atualizados do bichinho
     const fetchTamagochiDetails = useCallback(async () => {
         try {
             const tamagochis = await getTamagochi();
@@ -101,7 +94,6 @@ const DetailsScreen = () => {
         fetchTamagochiDetails();
     }, [fetchTamagochiDetails]);
 
-    // Atualiza os atributos ao longo do tempo (diminui a cada hora)
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentHunger(prev => Math.max(prev - 1, 0));
@@ -112,7 +104,6 @@ const DetailsScreen = () => {
         return () => clearInterval(interval);
     }, []);
 
-    // Obtém a fonte da imagem com base no ID
     const imageSource = bichinhoImages[Number(image)];
 
     return (
@@ -134,8 +125,12 @@ const DetailsScreen = () => {
                     <TouchableOpacity style={styles.button} onPress={letSleep}>
                         <Text style={styles.buttonText}>Dormir</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => router.push("/MiniGames")}>
+                    <TouchableOpacity 
+                        style={styles.button} 
+                        onPress={() => router.push({ pathname: "/MiniGames", params: { tamagochiId: tamagochiId } })}
+                    >
                         <Ionicons name="game-controller" size={24} color="white" />
+                        <Text style={styles.buttonText}>Mini Games</Text>
                     </TouchableOpacity>
                 </View>
             </View>
