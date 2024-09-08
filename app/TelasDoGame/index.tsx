@@ -87,7 +87,7 @@ const Index = () => {
 
         return (
             //Retorno a visualização dos cardas com o opção de touch para ir nos detalhes dos bichinhos;
-            <TouchableOpacity onPress={() => { router.push(`/TelasDoGame/DetailsScreen?id=${item.id}&name=${item.name}&image=${item.image}&hunger=${item.hunger}&sleep=${item.sleep}&fun=${item.fun}`) }}>
+            <TouchableOpacity onPress={() => { router.push(`/TelasDoGame/detailsScreen?id=${item.id}&name=${item.name}&image=${item.image}&hunger=${item.hunger}&sleep=${item.sleep}&fun=${item.fun}`) }}>
                 <View style={styles.card}>
                     <Image source={imageSource} style={styles.image} />
                     <View style={styles.info}>
@@ -111,7 +111,7 @@ const Index = () => {
                 keyExtractor={(item) => item.id.toString()}
                 contentContainerStyle={styles.list}
             />
-            <TouchableOpacity style={styles.button} onPress={() => { router.push("/TelasDoGame/RegistrationScreen") }}>
+            <TouchableOpacity style={styles.button} onPress={() => { router.push("/TelasDoGame/registrationScreen") }}>
                 <Ionicons name="add-outline" size={24} color="black" />
             </TouchableOpacity>
         </SafeAreaView>
