@@ -34,10 +34,10 @@ const Index = () => {
     // Função para carregar as informações do banco e armazenar no estado
     const list = async () => {
         try {
-            const response: TamagochiList[] = await getTamagochi();
+            const response = await getTamagochi();
             setTamagochiList(response);
         } catch (error) {
-            console.error(error);
+            console.error("Error loading tamagchi list:", error);
         }
     };
 
@@ -48,7 +48,7 @@ const Index = () => {
 
     // Renderiza cada tamagochi da lista
     const renderItem = ({ item }: { item: TamagochiList }) => {
-        const imageSource = bichinhoImages.find(img => img.id === item.image)?.source;
+        const imageSource = bichinhoImages.find(img => img.id === Number(item.image))?.source;
 
         return (
             <View style={styles.card}>

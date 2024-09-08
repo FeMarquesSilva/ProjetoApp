@@ -20,17 +20,18 @@ export function useTodoDatabase() {
         try {
             await query.executeAsync({ $name: name, $image: image, $hunger: hunger, $sleep: sleep, $fun: fun })
         } catch (error) {
-            throw error;
+            console.error("Error saving tamagochi:", error);
         } finally {
             await query.finalizeAsync()
         }
     }
-
-    async function getTamagochi() {
+    // Função para buscar os bichinhos cadastrados no banco de dados
+    async function getTamagochi(): Promise<TamagochiList[]> {
         try {
             const response = await database.getAllAsync<TamagochiList>(`SELECT * FROM tamagchis;`)
             return response
         } catch (error) {
+            console.error("Error fetching tamagchis:", error);
             throw error;
         }
     }
