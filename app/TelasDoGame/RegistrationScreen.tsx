@@ -29,7 +29,7 @@ const RegistrationScreen = () => {
       return
     }
     try {
-      const res = await saveTamagochi({ name: "name", image: 1, hunger: 100, sleep: 100, fun: 100 });
+      const res = await saveTamagochi({ name: name, image: image, hunger: 100, sleep: 100, fun: 100 });
       alert("Deu certo!")
       
     } catch (error) {

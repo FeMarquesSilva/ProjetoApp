@@ -3,6 +3,7 @@ import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image, FlatList
 import { Ionicons } from '@expo/vector-icons';
 import { router } from "expo-router";
 import Header from "@/components/Header";
+import { useTodoDatabase } from "../database/todoService";
 
 type Bichinho = {
     id: number,
@@ -14,7 +15,25 @@ type Bichinho = {
     imagem: any
 }
 
+/* 
 
+//Importo minha função de puxar as informações cadastradas do banca de dados;
+const { getTamagochi } = useTodoDatabase();
+//Crio uma array de objetos para carregar meus tamagochis;
+const [tamagochiList, setTamagochiList] = useState([{}]);
+
+//Função para carregar as informações e armazenar na minha array;
+const list = async () => {
+    try {
+        const response = await getTamagochi();
+        setTamagochiList(response);
+        console.error(tamagochiList)
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+*/
 
 const bichinhoData: Bichinho[] = [
     { id: 1, name: 'Bichinho 1', fome: 70, sono: 50, diversao: 80, status: 'ok', imagem: require('@/assets/images/bichinho.png') },
@@ -22,6 +41,23 @@ const bichinhoData: Bichinho[] = [
 ];
 
 const Index = () => {
+
+    //Importo minha função de puxar as informações cadastradas do banca de dados;
+    const { getTamagochi } = useTodoDatabase();
+    //Crio uma array de objetos para carregar meus tamagochis;
+    const [tamagochiList, setTamagochiList] = useState([{}]);
+
+    //Função para carregar as informações e armazenar na minha array;
+    const list = async () => {
+        try {
+            const response = await getTamagochi();
+            setTamagochiList(response);
+            console.error(tamagochiList)
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     const [bichinhos, setBichinhos] = useState<Bichinho[]>([]);
 
     useEffect(() => {
@@ -44,10 +80,12 @@ const Index = () => {
     return (
         <SafeAreaView style={styles.container}>
             <Header title="DETALHES DOS BICHINHOS"></Header>
-
             <FlatList data={bichinhos} renderItem={renderItem} keyExtractor={(item) => item.id.toString()} contentContainerStyle={styles.list} />
             <TouchableOpacity style={styles.addButton} onPress={() => { router.push("/TelasDoGame/RegistrationScreen") }}>
                 <Ionicons name="add-outline" size={24} color="black" />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => { router.navigate("/MiniGames") }}>
+                <Ionicons name="game-controller" size={24} color="black" />
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => { router.navigate("/MiniGames") }}>
                 <Ionicons name="game-controller" size={24} color="black" />

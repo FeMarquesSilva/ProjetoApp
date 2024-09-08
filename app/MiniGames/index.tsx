@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { Button, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const index = () => {
 
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     games: {
-        backgroundColor: "#f0f0f0",
+        backgroundColor: "#849686",
         flexDirection: 'row',
         padding: 8,
         alignItems: 'center',

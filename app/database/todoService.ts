@@ -1,8 +1,9 @@
 import { useSQLiteContext } from "expo-sqlite"
 
-interface Tamagochi {
+type TamagochiList = {
+    id: number;
     name: string;
-    image: string; // Representa o caminho ou identificador da imagem
+    image: number;
     hunger: number;
     sleep: number;
     fun: number;
@@ -27,7 +28,8 @@ export function useTodoDatabase() {
 
     async function getTamagochi() {
         try {
-            const response = await database.getAllAsync<any>(`SELECT * FROM tamagchis;`)
+            const response = await database.getAllAsync<TamagochiList>(`SELECT * FROM tamagchis;`)
+            return response
         } catch (error) {
             throw error;
         }
