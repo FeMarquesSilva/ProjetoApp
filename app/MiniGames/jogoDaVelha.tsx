@@ -10,11 +10,11 @@ type Player = "0" | "X";
 const JogoDaVelha = () => {
     const route = useRoute();
     const { tamagochiId } = route.params as { tamagochiId: string };
-    const id = Number(tamagochiId); // Converte o ID do bichinho para número
+    const id = Number(tamagochiId); // Converte o ID do bichinho para número;
 
     const { getTamagochi, alterTamagochi } = useTodoDatabase();
 
-    // Arrays com as possíveis combinações para ganhar
+    // Arrays com as possíveis combinações para ganhar;
     const vitory = [
         [0, 1, 2],
         [3, 4, 5],
@@ -26,12 +26,12 @@ const JogoDaVelha = () => {
         [2, 4, 6]
     ];
 
-    // Criação do tabuleiro com 9 posições
+    // Criação do tabuleiro com 9 posições;
     const tabuleiro = () => {
         return new Array(9).fill(true);
     };
 
-    // Componentes necessários
+    // Componentes necessários;
     const [vencedor, setVencedor] = useState<string | null>(null);
     const [jogador1Score, setJogador1Score] = useState(0);
     const [jogador2Score, setJogador2Score] = useState(0);
@@ -40,7 +40,7 @@ const JogoDaVelha = () => {
     const [jogador2Name, setJogador2Name] = useState('Player2');
     const [jogada, setJogada] = useState<{ [key: string]: Player }>({});
 
-    // Função para verificar quem é o jogador da vez
+    // Função para verificar quem é o jogador da vez;
     const jogadorDaVez = () => {
         if (jogadorTurn === "X") {
             return jogador1Name;
@@ -54,8 +54,8 @@ const JogoDaVelha = () => {
         if (!jogada[index] && !vencedor) {
             const novaJogada = { ...jogada, [index]: jogadorTurn };
             setJogada(novaJogada);
-            setJogadorTurn((prev) => (prev === "X" ? "0" : "X"));
-            verificarVencedor(novaJogada);
+            setJogadorTurn((prev) => (prev === "X" ? "0" : "X"));//Seta o jogador da vez;
+            verificarVencedor(novaJogada); //Verifica se a jogada fez uma vitória;
         }
     };
 

@@ -4,12 +4,12 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import Header from '@/components/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTodoDatabase } from "../database/todoService"; // Importa a função do banco de dados
+import { useTodoDatabase } from "../database/todoService"; 
 
 const DetailsScreen = () => {
     const { id, name, image } = useLocalSearchParams();
     const router = useRouter();
-    const { alterTamagochi, getTamagochi } = useTodoDatabase(); // Funções para manipular o banco de dados
+    const { alterTamagochi, getTamagochi } = useTodoDatabase();
 
     const tamagochiId = id ? Number(id) : 0;
 
