@@ -7,6 +7,7 @@ import {
   Image,
   FlatList,
   Button,
+  Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useFocusEffect } from "expo-router";
@@ -34,7 +35,8 @@ const bichinhoImages = [
 
 const Index = () => {
   const [tamagochiList, setTamagochiList] = useState<TamagochiList[]>([]);
-  const { getTamagochi, alterTamagochi, deleteTamagochiById } = useTodoDatabase();
+  const { getTamagochi, alterTamagochi, deleteTamagochiById } =
+    useTodoDatabase();
 
   // Função para carregar as informações do banco e armazenar no estado
   const list = async () => {
@@ -102,14 +104,29 @@ const Index = () => {
     )?.source;
 
     //Função para ao precionar o botão de 'trash' o tamagochi será apagado da tabela no banco de dados de acordo com o id;
-    const removeTamagochi = async ( id: number) => {
-        alert(`Deseja realmente remover seu tamagochi ${item.name} permanemtemente?`)
-        try {
-            await deleteTamagochiById({id})
-        } catch (error) {
-            console.error(error);
-        }
-    }
+    const removeTamagochi = (id: number) => {
+        Alert.alert(
+            'Confirmar Remoção',
+            `Deseja realmente remover o Tamagochi ${item.name} permanentemente?`,
+            [
+                {
+                    text: 'Não',
+                    style: 'cancel',
+                },
+                {
+                    text: 'Sim',
+                    onPress: async () => {
+                        try {
+                            await deleteTamagochiById({id});
+                        } catch (error) {
+                            console.error('Erro ao remover o Tamagochi:', error);
+                        }
+                    },
+                },
+            ],
+        );
+    };
+    
 
     return (
       //Retorno a visualização dos cardas com o opção de touch para ir nos detalhes dos bichinhos;
@@ -129,8 +146,12 @@ const Index = () => {
             <Text>Diversão: {item.fun}</Text>
             <Text>Status: {item.status}</Text>
           </View>
-          <TouchableOpacity onPress={() => {removeTamagochi(item.id)}}>
-            <Ionicons name='trash' size={24} color="black" />
+          <TouchableOpacity
+            onPress={() => {
+              removeTamagochi(item.id);
+            }}
+          >
+            <Ionicons name="trash" size={24} color="black" />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
