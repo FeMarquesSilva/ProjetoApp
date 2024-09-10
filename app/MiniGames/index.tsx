@@ -6,9 +6,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from 'expo-router';
 
 const Index = () => {
-    const route = useRoute();
-    const router = useRouter();
-    const { tamagochiId } = route.params as { tamagochiId: string };
+    const route = useRoute(); // Usamos o hook 'useRoute' para acessar os parâmetros da rota atual;
+    const router = useRouter(); // Usamos o hook 'useRouter' para navegar entre telas;
+
+    // Extração do parâmetro 'tamagochiId' dos parâmetros da rota (presume que o parâmetro seja uma string);
+    const { tamagochiId } = route.params as { tamagochiId: string };  
 
     return (
         <SafeAreaView style={styles.container}>
