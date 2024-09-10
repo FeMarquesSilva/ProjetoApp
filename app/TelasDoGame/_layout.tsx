@@ -22,14 +22,14 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="RegistrationScreen"
+        name="registrationScreen"
         options={{
           title: 'Jogo da Velha',
           tabBarStyle: { display: 'none' },
         }}
       />
       <Tabs.Screen
-        name="DetailsScreen"
+        name="detailsScreen"
         options={{
           title: 'Tela de Detalhes',
           tabBarStyle: { display: 'none' },
