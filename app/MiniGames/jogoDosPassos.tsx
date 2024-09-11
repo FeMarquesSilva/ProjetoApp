@@ -129,9 +129,9 @@ const jogoDosPassos = () => {
 
     /**
      * Função auxiliar para gerar um número inteiro aleatório entre min e max (inclusive).
-     * @param min Número mínimo
-     * @param max Número máximo
-     * @returns Número inteiro aleatório entre min e max
+     * @param min
+     * @param max
+     * @returns
      */
     const getRandomInt = (min: number, max: number) => {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -202,4 +202,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default jogoDosPassos; // Exporta o componente para ser usado em outras partes do aplicativo
+export default jogoDosPassos;
