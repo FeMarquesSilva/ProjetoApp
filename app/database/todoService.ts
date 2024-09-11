@@ -1,14 +1,5 @@
 import { useSQLiteContext } from "expo-sqlite";
-
-type TamagochiList = {
-  id: number;
-  name: string;
-  image: number;
-  hunger: number;
-  sleep: number;
-  fun: number;
-  status: string;
-};
+import { typeTamagochiList } from "../functions/services"
 
 // Todas as funções de banco, deverá ser criada neste arquivo, para ser exportadora, e importado somente nos locais necessários.
 export function useTodoDatabase() {
@@ -38,7 +29,7 @@ export function useTodoDatabase() {
 
   async function getTamagochi() {
     try {
-      const response = await database.getAllAsync<TamagochiList>(`SELECT * FROM tamagchis;`);
+      const response = await database.getAllAsync<typeTamagochiList>(`SELECT * FROM tamagchis;`);
       return response;
     } catch (error) {
       throw error;

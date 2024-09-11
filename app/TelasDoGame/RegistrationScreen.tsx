@@ -6,9 +6,8 @@ import { useTodoDatabase } from "../database/todoService";
 import { router } from "expo-router";
 import { todoFunctions } from "../functions/services";
 
-
 const RegistrationScreen = () => {
-  
+
   const { bichinhoImages } = todoFunctions()
   const [name, setName] = useState<string>('')
   const [image, setImage] = useState<number | null>(null)

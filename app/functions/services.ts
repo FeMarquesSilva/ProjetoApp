@@ -18,6 +18,17 @@ export function todoFunctions() {
         5: require('@/assets/images/bichinho5.png'),
     };
 
-
+    
+    
     return { bichinhoImages, bichinhoImagesByID }
-}
+  }
+  
+  export type typeTamagochiList = {
+    id: number;
+    name: string;
+    image: number;
+    hunger: number;
+    sleep: number;
+    fun: number;
+    status: string;
+  };

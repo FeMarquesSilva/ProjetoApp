@@ -1,40 +1,23 @@
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  FlatList,
-  Alert,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image, FlatList, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useFocusEffect } from "expo-router";
 import Header from "@/components/Header";
 import { useTodoDatabase } from "../database/todoService";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { todoFunctions } from '../functions/services'; // Importo minhas funções criadas em um arquivo a parte
-
-type TamagochiList = {
-  id: number;
-  name: string;
-  image: number;
-  hunger: number;
-  sleep: number;
-  fun: number;
-  status: string;
-};
-
-const { bichinhoImages } = todoFunctions(); //Importo a lista de bichinhos (Imagens) ;
+import { typeTamagochiList } from "../functions/services"
 
 const Index = () => {
-  const [tamagochiList, setTamagochiList] = useState<TamagochiList[]>([]);
-  const { getTamagochi, alterTamagochi, deleteTamagochiById } = useTodoDatabase();
 
+  const [tamagochiList, setTamagochiList] = useState<typeTamagochiList[]>([]);
+  const { getTamagochi, alterTamagochi, deleteTamagochiById } = useTodoDatabase();
+  const { bichinhoImages } = todoFunctions(); //Importo a lista de bichinhos (Imagens) ;
+  
   // Função para carregar as informações do banco e armazenar no estado
   const list = async () => {
     try {
-      const response: TamagochiList[] = await getTamagochi();
+      const response: typeTamagochiList[] = await getTamagochi();
       setTamagochiList(response);
     } catch (error) {
       console.error(error);
@@ -91,7 +74,7 @@ const Index = () => {
   }, [getTamagochi, alterTamagochi]);
 
   // Renderiza cada tamagochi da lista
-  const renderItem = ({ item }: { item: TamagochiList }) => {
+  const renderItem = ({ item }: { item: typeTamagochiList }) => {
     const imageSource = bichinhoImages.find(
       (img) => img.id === Number(item.image)
     )?.source;
