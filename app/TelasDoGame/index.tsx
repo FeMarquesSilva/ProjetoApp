@@ -13,6 +13,7 @@ import { router, useFocusEffect } from "expo-router";
 import Header from "@/components/Header";
 import { useTodoDatabase } from "../database/todoService";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { todoFunctions } from '../functions/services'; // Importo minhas funções criadas em um arquivo a parte
 
 type TamagochiList = {
   id: number;
@@ -24,18 +25,11 @@ type TamagochiList = {
   status: string;
 };
 
-const bichinhoImages = [
-  { id: 1, source: require("@/assets/images/bichinho.png") },
-  { id: 2, source: require("@/assets/images/bichinho2.png") },
-  { id: 3, source: require("@/assets/images/bichinho3.png") },
-  { id: 4, source: require("@/assets/images/bichinho4.png") },
-  { id: 5, source: require("@/assets/images/bichinho5.png") },
-];
+const { bichinhoImages } = todoFunctions(); //Importo a lista de bichinhos (Imagens) ;
 
 const Index = () => {
   const [tamagochiList, setTamagochiList] = useState<TamagochiList[]>([]);
-  const { getTamagochi, alterTamagochi, deleteTamagochiById } =
-    useTodoDatabase();
+  const { getTamagochi, alterTamagochi, deleteTamagochiById } = useTodoDatabase();
 
   // Função para carregar as informações do banco e armazenar no estado
   const list = async () => {
