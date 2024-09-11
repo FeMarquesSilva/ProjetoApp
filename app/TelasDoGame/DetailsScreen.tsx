@@ -5,22 +5,15 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import Header from '@/components/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTodoDatabase } from "../database/todoService"; 
+import { todoFunctions } from '../functions/services'; // Importo minhas funções criadas em um arquivo a parte
 
 const DetailsScreen = () => {
+
+    const { bichinhoImages } = todoFunctions(); //Importo a lista de bichinhos (Imagens) ;
     const { id, name, image } = useLocalSearchParams();
     const router = useRouter();
     const { alterTamagochi, getTamagochi } = useTodoDatabase();
-
     const tamagochiId = id ? Number(id) : 0;
-
-    const bichinhoImages: { [key: number]: any } = {
-        1: require('@/assets/images/bichinho.png'),
-        2: require('@/assets/images/bichinho2.png'),
-        3: require('@/assets/images/bichinho3.png'),
-        4: require('@/assets/images/bichinho4.png'),
-        5: require('@/assets/images/bichinho5.png'),
-    };
-
     const [currentHunger, setCurrentHunger] = useState<number>(0);
     const [currentSleep, setCurrentSleep] = useState<number>(0);
     const [currentFun, setCurrentFun] = useState<number>(0);
@@ -104,7 +97,8 @@ const DetailsScreen = () => {
         return () => clearInterval(interval);
     }, []);
 
-    const imageSource = bichinhoImages[Number(image)];
+    //Utilizo a função importada;
+    const imageSource = bichinhoImages.find(img => img.id === Number(image))?.source; 
 
     return (
         <SafeAreaView style={styles.container}>

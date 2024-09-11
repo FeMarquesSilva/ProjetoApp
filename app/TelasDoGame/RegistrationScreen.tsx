@@ -4,16 +4,12 @@ import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTodoDatabase } from "../database/todoService";
 import { router } from "expo-router";
+import { todoFunctions } from "../functions/services";
 
-const bichinhoImages = [
-  { id: 1, source: require('@/assets/images/bichinho.png') },
-  { id: 2, source: require('@/assets/images/bichinho2.png') },
-  { id: 3, source: require('@/assets/images/bichinho3.png') },
-  { id: 4, source: require('@/assets/images/bichinho4.png') },
-  { id: 5, source: require('@/assets/images/bichinho5.png') },
-]
 
 const RegistrationScreen = () => {
+  
+  const { bichinhoImages } = todoFunctions()
   const [name, setName] = useState<string>('')
   const [image, setImage] = useState<number | null>(null)
   const { saveTamagochi } = useTodoDatabase();

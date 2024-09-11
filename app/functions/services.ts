@@ -10,6 +10,14 @@ export function todoFunctions() {
         { id: 5, source: require("@/assets/images/bichinho5.png") },
       ];
 
+      const bichinhoImagesByID: { [key: number]: any } = {
+        1: require('@/assets/images/bichinho.png'),
+        2: require('@/assets/images/bichinho2.png'),
+        3: require('@/assets/images/bichinho3.png'),
+        4: require('@/assets/images/bichinho4.png'),
+        5: require('@/assets/images/bichinho5.png'),
+    };
 
-    return { bichinhoImages }
+
+    return { bichinhoImages, bichinhoImagesByID }
 }
