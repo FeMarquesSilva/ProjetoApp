@@ -6,12 +6,12 @@ import Header from "@/components/Header";
 import { useTodoDatabase } from "../database/todoService";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { todoFunctions } from '../functions/services'; // Importo minhas funções criadas em um arquivo a parte
-import { typeTamagochiList } from "../functions/services"
+import { typeTamagochiList } from "../functions/services";
 
 const Index = () => {
   const [tamagochiList, setTamagochiList] = useState<typeTamagochiList[]>([]);
   const { getTamagochi, alterTamagochi, deleteTamagochiById } = useTodoDatabase();
-  const { bichinhoImages } = todoFunctions(); //Importo a lista de bichinhos (Imagens) ;
+  const { bichinhoImages } = todoFunctions(); // Importo a lista de bichinhos (Imagens)
 
   // Função para carregar as informações do banco e armazenar no estado
   const list = async () => {
@@ -27,10 +27,10 @@ const Index = () => {
   useFocusEffect(
     React.useCallback(() => {
       list();
-    }, [deleteTamagochiById])
+    }, [])
   );
 
-  // Atualiza os atributos a cada 30 segundos
+  // Atualiza os atributos a cada 10 segundos
   useEffect(() => {
     const atualizarAtributos = async () => {
       try {
@@ -69,7 +69,7 @@ const Index = () => {
       }
     };
 
-    const interval = setInterval(atualizarAtributos, 10000); // 30s
+    const interval = setInterval(atualizarAtributos, 10000); // 10s
 
     return () => clearInterval(interval);
   }, [getTamagochi, alterTamagochi]);
@@ -98,6 +98,8 @@ const Index = () => {
             onPress: async () => {
               try {
                 await deleteTamagochiById({ id });
+                // Atualiza a lista imediatamente após a remoção
+                setTamagochiList(prev => prev.filter(t => t.id !== id));
               } catch (error) {
                 console.error('Erro ao remover o Tamagochi:', error);
               }
@@ -108,7 +110,6 @@ const Index = () => {
     };
 
     return (
-      // Retorna a visualização dos cards com a opção de touch para ir nos detalhes dos bichinhos, se não estiver morto;
       <TouchableOpacity
         onPress={() => {
           if (!isDead) {
@@ -117,14 +118,14 @@ const Index = () => {
             );
           }
         }}
-        disabled={isDead} // Desabilita navegação se o Tamagotchi estiver morto
+        disabled={isDead}
       >
         <View style={[styles.card, isDead && styles.cardDead]}>
           <Image source={imageSource} style={styles.image} />
           <View style={styles.info}>
             <Text style={styles.name}>{item.name}</Text>
             {isDead ? (
-              <Text style={styles.gameOverText}>Game Over</Text> // Exibe "Game Over" se o status for morto
+              <Text style={styles.gameOverText}>Game Over</Text>
             ) : (
               <>
                 <Text>Fome: {item.hunger}</Text>
