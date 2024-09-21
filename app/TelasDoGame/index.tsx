@@ -9,11 +9,10 @@ import { todoFunctions } from '../functions/services'; // Importo minhas funçõ
 import { typeTamagochiList } from "../functions/services"
 
 const Index = () => {
-
   const [tamagochiList, setTamagochiList] = useState<typeTamagochiList[]>([]);
   const { getTamagochi, alterTamagochi, deleteTamagochiById } = useTodoDatabase();
   const { bichinhoImages } = todoFunctions(); //Importo a lista de bichinhos (Imagens) ;
-  
+
   // Função para carregar as informações do banco e armazenar no estado
   const list = async () => {
     try {
@@ -29,7 +28,7 @@ const Index = () => {
     list();
   });
 
-  // Atualiza os atributos a cada 3 segundos
+  // Atualiza os atributos a cada 30 segundos
   useEffect(() => {
     const atualizarAtributos = async () => {
       try {
@@ -79,48 +78,59 @@ const Index = () => {
       (img) => img.id === Number(item.image)
     )?.source;
 
-    //Função para ao precionar o botão de 'trash' o tamagochi será apagado da tabela no banco de dados de acordo com o id;
+    // Verifica se o Tamagotchi está morto
+    const isDead = item.status === "morto";
+
+    // Função para remover o Tamagochi
     const removeTamagochi = (id: number) => {
-        Alert.alert(
-            'Confirmar Remoção',
-            `Deseja realmente remover o Tamagochi ${item.name} permanentemente?`,
-            [
-                {
-                    text: 'Não',
-                    style: 'cancel',
-                },
-                {
-                    text: 'Sim',
-                    onPress: async () => {
-                        try {
-                            await deleteTamagochiById({id});
-                        } catch (error) {
-                            console.error('Erro ao remover o Tamagochi:', error);
-                        }
-                    },
-                },
-            ],
-        );
+      Alert.alert(
+        'Confirmar Remoção',
+        `Deseja realmente remover o Tamagochi ${item.name} permanentemente?`,
+        [
+          {
+            text: 'Não',
+            style: 'cancel',
+          },
+          {
+            text: 'Sim',
+            onPress: async () => {
+              try {
+                await deleteTamagochiById({ id });
+              } catch (error) {
+                console.error('Erro ao remover o Tamagochi:', error);
+              }
+            },
+          },
+        ],
+      );
     };
-    
 
     return (
-      //Retorno a visualização dos cardas com o opção de touch para ir nos detalhes dos bichinhos;
+      // Retorna a visualização dos cards com a opção de touch para ir nos detalhes dos bichinhos, se não estiver morto;
       <TouchableOpacity
         onPress={() => {
-          router.push(
-            `/TelasDoGame/detailsScreen?id=${item.id}&name=${item.name}&image=${item.image}&hunger=${item.hunger}&sleep=${item.sleep}&fun=${item.fun}`
-          );
+          if (!isDead) {
+            router.push(
+              `/TelasDoGame/detailsScreen?id=${item.id}&name=${item.name}&image=${item.image}&hunger=${item.hunger}&sleep=${item.sleep}&fun=${item.fun}`
+            );
+          }
         }}
+        disabled={isDead} // Desabilita navegação se o Tamagotchi estiver morto
       >
-        <View style={styles.card}>
+        <View style={[styles.card, isDead && styles.cardDead]}>
           <Image source={imageSource} style={styles.image} />
           <View style={styles.info}>
             <Text style={styles.name}>{item.name}</Text>
-            <Text>Fome: {item.hunger}</Text>
-            <Text>Sono: {item.sleep}</Text>
-            <Text>Diversão: {item.fun}</Text>
-            <Text>Status: {item.status}</Text>
+            {isDead ? (
+              <Text style={styles.gameOverText}>Game Over</Text> // Exibe "Game Over" se o status for morto
+            ) : (
+              <>
+                <Text>Fome: {item.hunger}</Text>
+                <Text>Sono: {item.sleep}</Text>
+                <Text>Diversão: {item.fun}</Text>
+                <Text>Status: {item.status}</Text>
+              </>
+            )}
           </View>
           <TouchableOpacity
             onPress={() => {
@@ -136,7 +146,7 @@ const Index = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header title="LISTAGEM DOS BICHINHOS"></Header>
+      <Header title="LISTAGEM DOS BICHINHOS" />
       <FlatList
         data={tamagochiList}
         renderItem={renderItem}
@@ -178,6 +188,9 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
+  cardDead: {
+    backgroundColor: "#808080",
+  },
   image: {
     width: 100,
     height: 100,
@@ -191,6 +204,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 5,
+  },
+  gameOverText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "red",
   },
   button: {
     flexDirection: "row",
