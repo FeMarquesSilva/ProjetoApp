@@ -24,9 +24,11 @@ const Index = () => {
   };
 
   // Chama a função de listagem quando o componente for montado
-  useFocusEffect(() => {
-    list();
-  });
+  useFocusEffect(
+    React.useCallback(() => {
+      list();
+    }, [])
+  );
 
   // Atualiza os atributos a cada 30 segundos
   useEffect(() => {
@@ -67,7 +69,7 @@ const Index = () => {
       }
     };
 
-    const interval = setInterval(atualizarAtributos, 30000); // 30s
+    const interval = setInterval(atualizarAtributos, 10000); // 30s
 
     return () => clearInterval(interval);
   }, [getTamagochi, alterTamagochi]);
