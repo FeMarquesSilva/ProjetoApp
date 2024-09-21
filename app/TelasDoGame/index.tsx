@@ -27,7 +27,7 @@ const Index = () => {
   useFocusEffect(
     React.useCallback(() => {
       list();
-    }, [])
+    }, [deleteTamagochiById])
   );
 
   // Atualiza os atributos a cada 30 segundos
