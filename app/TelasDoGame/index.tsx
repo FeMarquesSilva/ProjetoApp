@@ -206,9 +206,12 @@ const styles = StyleSheet.create({
   },
   // Estilo do texto "Game Over":
   gameOverText: {
-    fontSize: 18,
+    fontSize: 25,
     fontWeight: "bold",
     color: "red",
+    textAlign: "center",
+    backgroundColor: "#fff",
+    borderRadius: 2,
   },
   // Estilo do botão de adicionar bichinho:
   button: {

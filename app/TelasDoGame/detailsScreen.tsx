@@ -110,10 +110,16 @@ const DetailsScreen = () => {
     
                 {/* Exibição dos atributos do bichinho: */}
                 <View style={[styles.cardSmall, isSleep && styles.cardSleep]}>
-                    <Text style={styles.attributeText}>Fome: {currentHunger}</Text>
-                    <Text style={styles.attributeText}>Sono: {currentSleep}</Text>
-                    <Text style={styles.attributeText}>Diversão: {currentFun}</Text>
-                    <Text style={styles.attributeText}>Status: {calculateStatus(currentHunger, currentSleep, currentFun)}</Text>
+                    <Text style={styles.attributeText}> Fome: {currentHunger}</Text>
+                </View>
+                <View style={[styles.cardSmall, isSleep && styles.cardSleep]}>
+                <Text style={styles.attributeText}> Sono: {currentSleep}</Text>
+                </View>
+                <View style={[styles.cardSmall, isSleep && styles.cardSleep]}>
+                <Text style={styles.attributeText}> Diversão: {currentFun}</Text>
+                </View>
+                <View style={[styles.cardSmall, isSleep && styles.cardSleep]}>
+                <Text style={styles.attributeText}> Status: {calculateStatus(currentHunger, currentSleep, currentFun)}</Text>
                 </View>
     
                 {/* Container de botões: */}
@@ -164,7 +170,7 @@ const styles = StyleSheet.create({
     // Estilo do cartão grande:
     cardLarge: {
         width: '90%',
-        backgroundColor: '#FFF',
+        backgroundColor: '#fff',
         borderRadius: 15,
         alignItems: 'center',
         padding: 20,
@@ -173,7 +179,7 @@ const styles = StyleSheet.create({
     },
     // Estilo do cartão quando o bichinho está dormindo:
     cardSleep: {
-        backgroundColor: '#E0E0E0', 
+        backgroundColor: '#8b8c89', 
     },
     // Estilo da imagem do bichinho:
     image: {
@@ -190,12 +196,12 @@ const styles = StyleSheet.create({
     // Estilo do cartão pequeno:
     cardSmall: {
         width: '90%',
-        backgroundColor: '#FFF',
-        borderRadius: 15,
-        padding: 20,
-        marginBottom: 20,
-        alignItems: 'center',
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        padding: 5,
+        marginBottom: 5,
         elevation: 3,
+        
     },
     // Estilo dos textos dos atributos:
     attributeText: {
