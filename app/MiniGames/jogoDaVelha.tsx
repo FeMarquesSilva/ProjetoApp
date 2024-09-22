@@ -14,7 +14,7 @@ const JogoDaVelha = () => {
 
     const { getTamagochi, alterTamagochi } = useTodoDatabase();
 
-    // Arrays com as possíveis combinações para ganhar;
+    // Arrays com as possíveis combinações para ganhar:
     const vitory = [
         [0, 1, 2],
         [3, 4, 5],
@@ -26,12 +26,12 @@ const JogoDaVelha = () => {
         [2, 4, 6]
     ];
 
-    // Criação do tabuleiro com 9 posições;
+    // Criação do tabuleiro com 9 posições:
     const tabuleiro = () => {
         return new Array(9).fill(true);
     };
 
-    // Componentes necessários;
+    // Componentes necessários:
     const [vencedor, setVencedor] = useState<string | null>(null);
     const [jogador1Score, setJogador1Score] = useState(0);
     const [jogador2Score, setJogador2Score] = useState(0);
@@ -161,10 +161,12 @@ const JogoDaVelha = () => {
 export default JogoDaVelha;
 
 const styles = StyleSheet.create({
+    // Estilo da tela principal:
     containerBody: {
         backgroundColor: "#FF8433",
         height: "100%",
     },
+    // Estilo do contêiner do jogo:
     container: {
         width: "100%",
         height: "75%",
@@ -173,6 +175,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
+    // Estilo do tabuleiro:
     board: {
         display: 'flex',
         justifyContent: 'center',
@@ -181,6 +184,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         margin: 10,
     },
+    // Estilo das células do tabuleiro:
     cell: {
         width: 100,
         fontSize: 80,
@@ -190,6 +194,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#d4f1d9",
         margin: 2,
     },
+    // Estilo das informações dos jogadores:
     info: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -198,14 +203,17 @@ const styles = StyleSheet.create({
         backgroundColor: "#F0391D",
         marginBottom: 100,
     },
+    // Estilo dos itens de informação:
     infoItem: {
         flex: 1,
         alignItems: 'center',
     },
+    // Estilo do texto de informações:
     infoText: {
         fontSize: 16,
         color: "#fff",
     },
+    // Estilo do texto do jogador da vez:
     playerTurn: {
         backgroundColor: "#73b295",
         textAlign: 'center',
@@ -213,12 +221,14 @@ const styles = StyleSheet.create({
         padding: 10,
         margin: 5,
     },
+    // Estilo do botão:
     button: {
         backgroundColor: "#006400",
         padding: 10,
         borderRadius: 5,
         marginTop: 20,
     },
+    // Estilo do texto do botão:
     buttonText: {
         color: '#fff',
         fontSize: 18,

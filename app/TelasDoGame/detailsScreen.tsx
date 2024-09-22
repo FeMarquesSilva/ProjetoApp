@@ -129,16 +129,16 @@ const DetailsScreen = () => {
                         <MaterialCommunityIcons name="sleep" size={24} color="white" />
                         <Text style={styles.buttonText}>{isSleep ? 'Acordar' : 'Dormir'}</Text>
                     </TouchableOpacity>
-    
+                </View>
+
                     {/* Botão para acessar mini jogos: */}
                     <TouchableOpacity
-                        style={styles.button}
+                    style={styles.buttonGames}
                         onPress={() => router.push({ pathname: "/MiniGames", params: { tamagochiId: tamagochiId } })}
                     >
-                        <Ionicons name="game-controller" size={24} color="white" />
-                        <Text style={styles.buttonText}>Mini Games</Text>
+                        <Text style={styles.buttonText}>Mini Games   </Text>
+                        <Ionicons name="game-controller" size={24} color="white"/>
                     </TouchableOpacity>
-                </View>
             </View>
         </SafeAreaView>
     );
@@ -209,12 +209,22 @@ const styles = StyleSheet.create({
         width: '100%',
         marginTop: 20,
     },
+    // Estilo do botão de jogos:
+    buttonGames: {
+        flexDirection: 'row',
+        width: "90%",
+        justifyContent: 'center',
+        marginTop: 20,
+        backgroundColor: '#ba181b',
+        borderRadius: 10,
+        padding: 20,
+    },
     // Estilo do botão:
     button: {
-        backgroundColor: '#f13601',
-        padding: 15,
+        backgroundColor: '#005f73',
+        padding: 10,
         borderRadius: 10,
-        width: '30%',
+        width: '40%',
         alignItems: 'center',
     },
     // Estilo do texto dentro do botão:
