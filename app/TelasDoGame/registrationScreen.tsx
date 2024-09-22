@@ -35,9 +35,9 @@ const RegistrationScreen = () => {
     <SafeAreaView style={styles.safeArea}>
       <Header title="CADASTRO DE BICHINHO"></Header>
       <View style={styles.container}>
-        <Text style={styles.label}>Nome do Bichinho</Text>
+        <Text style={styles.label}>Nome do Bichinho:</Text>
         <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Defina um nome para seu bichinho!" />
-        <Text style={styles.label}>Selecionar uma Imagem</Text>
+        <Text style={styles.label}>Escolha uma Imagem:</Text>
         <FlatList data={tamagochiImages} numColumns={2} renderItem={({ item }) => (
           <TouchableOpacity style={[styles.imageCard, image === item.id ? styles.selectedImage : null,]}
             onPress={() => setImage(item.id)} >
@@ -68,28 +68,36 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   label: {
-    fontSize: 16,
+    fontSize: 18,
     marginBottom: 10,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    backgroundColor: "#d00000",
+    color: "#fff",
+    padding: 15,
+    borderRadius: 10,
   },
   input: {
     padding: 10,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#000',
     marginBottom: 20,
     borderRadius: 6,
     fontSize: 18,
+    backgroundColor: "#fff"
   },
   imageList: {
     flexGrow: 1,
     alignItems: 'center',
     padding: 30,
-    gap: 10
+    gap: 10,
+    backgroundColor: "#e85d04",
+    borderRadius: 50,
   },
   imageCard: {
     padding: 5,
     borderWidth: 2,
     borderColor: '#ddd',
+    backgroundColor: "#FF8433",
     borderRadius: 6,
     marginRight: 10,
   },
