@@ -5,15 +5,15 @@ import { router, useFocusEffect } from "expo-router";
 import Header from "@/components/Header";
 import { useTodoDatabase } from "../database/todoService";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { todoFunctions } from '../functions/services'; // Importo minhas funções criadas em um arquivo a parte
-import { typeTamagochiList } from "../functions/services";
+import { todoFunctions, calculateStatus, typeTamagochiList } from '../functions/services';
 
+//Tela de Listagem:
 const Index = () => {
-  const [tamagochiList, setTamagochiList] = useState<typeTamagochiList[]>([]);
+  const [ tamagochiList, setTamagochiList] = useState<typeTamagochiList[]>([]);
   const { getTamagochi, alterTamagochi, deleteTamagochiById } = useTodoDatabase();
-  const { bichinhoImages } = todoFunctions(); // Importo a lista de bichinhos (Imagens)
+  const { bichinhoImages} = todoFunctions(); 
 
-  // Função para carregar as informações do banco e armazenar no estado
+  // Função para carregar as informações do banco e armazenar no estado:
   const list = async () => {
     try {
       const response: typeTamagochiList[] = await getTamagochi();
@@ -23,32 +23,26 @@ const Index = () => {
     }
   };
 
-  // Chama a função de listagem quando o componente for montado
+  // Chama a função de listagem toda vez que a tela ganha foco (Montagem da chamada "list()" apenas com atualizações):
   useFocusEffect(
     React.useCallback(() => {
       list();
     }, [])
   );
 
-  // Atualiza os atributos a cada 10 segundos
+  // Atualiza os atributos a cada 10 segundos:
   useEffect(() => {
     const atualizarAtributos = async () => {
       try {
         const tamagochis = await getTamagochi();
+        // Mapeamos cada bichinho para atualizar seus atributos
         const updatedTamagochis = tamagochis.map((tamagochi) => {
           const updatedHunger = Math.max(tamagochi.hunger - 1, 0);
           const updatedSleep = Math.max(tamagochi.sleep - 1, 0);
           const updatedFun = Math.max(tamagochi.fun - 1, 0);
 
-          const total = updatedHunger + updatedSleep + updatedFun;
-          let status = "";
-          if (total === 0) status = "morto";
-          else if (total <= 50) status = "crítico";
-          else if (total <= 100) status = "muito triste";
-          else if (total <= 150) status = "triste";
-          else if (total <= 200) status = "ok";
-          else if (total <= 250) status = "bem";
-          else status = "muito bem";
+          //Defino o status usando a função de calcular status:
+          const status = calculateStatus(updatedHunger, updatedSleep, updatedFun)
 
           return {
             ...tamagochi,
@@ -63,7 +57,7 @@ const Index = () => {
           updatedTamagochis.map((tamagochi) => alterTamagochi(tamagochi))
         );
 
-        setTamagochiList(updatedTamagochis); // Atualiza a lista no estado
+        setTamagochiList(updatedTamagochis); // Atualiza a lista no estado;
       } catch (error) {
         console.error(error);
       }
@@ -86,19 +80,19 @@ const Index = () => {
     // Função para remover o Tamagochi
     const removeTamagochi = (id: number) => {
       Alert.alert(
-        'Confirmar Remoção',
-        `Deseja realmente remover o Tamagochi ${item.name} permanentemente?`,
+        'Confirmar Remoção',//Titulo;
+        `Deseja realmente remover o Tamagochi ${item.name} permanentemente?`,//Menssagem;
         [
-          {
+          {//Opção 1;
             text: 'Não',
             style: 'cancel',
           },
-          {
+          {//Opção 2;
             text: 'Sim',
             onPress: async () => {
               try {
                 await deleteTamagochiById({ id });
-                // Atualiza a lista imediatamente após a remoção
+                // Atualiza a lista imediatamente após a remoção:
                 setTamagochiList(prev => prev.filter(t => t.id !== id));
               } catch (error) {
                 console.error('Erro ao remover o Tamagochi:', error);
@@ -113,19 +107,15 @@ const Index = () => {
       <TouchableOpacity
         onPress={() => {
           if (!isDead) {
-            router.push(
-              `/TelasDoGame/detailsScreen?id=${item.id}&name=${item.name}&image=${item.image}&hunger=${item.hunger}&sleep=${item.sleep}&fun=${item.fun}`
-            );
-          }
-        }}
+            router.push(`/TelasDoGame/detailsScreen?id=${item.id}&name=${item.name}&image=${item.image}&hunger=${item.hunger}&sleep=${item.sleep}&fun=${item.fun}`);
+          }}}
         disabled={isDead}
       >
         <View style={[styles.card, isDead && styles.cardDead]}>
           <Image source={imageSource} style={styles.image} />
           <View style={styles.info}>
             <Text style={styles.name}>{item.name}</Text>
-            {isDead ? (
-              <Text style={styles.gameOverText}>Game Over</Text>
+            {isDead ? (<Text style={styles.gameOverText}>Game Over</Text>
             ) : (
               <>
                 <Text>Fome: {item.hunger}</Text>
@@ -136,9 +126,7 @@ const Index = () => {
             )}
           </View>
           <TouchableOpacity
-            onPress={() => {
-              removeTamagochi(item.id);
-            }}
+            onPress={() => {removeTamagochi(item.id)}}
           >
             <Ionicons name="trash" size={24} color="black" />
           </TouchableOpacity>
@@ -158,9 +146,7 @@ const Index = () => {
       />
       <TouchableOpacity
         style={styles.button}
-        onPress={() => {
-          router.push("/TelasDoGame/registrationScreen");
-        }}
+        onPress={() => {router.push("/TelasDoGame/registrationScreen")}}
       >
         <Ionicons name="add-outline" size={24} color="black" />
       </TouchableOpacity>

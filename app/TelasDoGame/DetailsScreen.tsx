@@ -5,7 +5,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import Header from '@/components/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTodoDatabase } from "../database/todoService";
-import { todoFunctions } from '../functions/services';
+import { todoFunctions, calculateStatus } from '../functions/services';
 
 const DetailsScreen = () => {
     const { bichinhoImages } = todoFunctions();
@@ -14,22 +14,13 @@ const DetailsScreen = () => {
     const { alterTamagochi, getTamagochi } = useTodoDatabase();
     const tamagochiId = id ? Number(id) : 0;
 
-    const [currentHunger, setCurrentHunger] = useState<number>(0);
-    const [currentSleep, setCurrentSleep] = useState<number>(0);
-    const [currentFun, setCurrentFun] = useState<number>(0);
+    // Estados para atributos do bichinho
+    const [currentHunger, setCurrentHunger] = useState<number>(0); //Fome;
+    const [currentSleep, setCurrentSleep] = useState<number>(0); // Sono;
+    const [currentFun, setCurrentFun] = useState<number>(0); // Diversão;
     const [isSleep, setIsSleep] = useState(false);
 
-    const calculateStatus = () => {
-        const total = currentHunger + currentSleep + currentFun;
-        if (total === 0) return 'morto';
-        if (total <= 50) return 'crítico';
-        if (total <= 100) return 'muito triste';
-        if (total <= 150) return 'triste';
-        if (total <= 200) return 'ok';
-        if (total <= 250) return 'bem';
-        return 'muito bem';
-    };
-
+    // Função para alimentar o bichinho:
     const feedPet = async () => {
         const newHunger = Math.min(currentHunger + 10, 100);
         setCurrentHunger(newHunger);
@@ -42,7 +33,7 @@ const DetailsScreen = () => {
                 hunger: newHunger,
                 sleep: currentSleep,
                 fun: currentFun,
-                status: calculateStatus(),
+                status: calculateStatus(currentHunger, currentSleep, currentFun),
             };
             await alterTamagochi(updatedTamagochi);
         } catch (error) {
@@ -50,51 +41,39 @@ const DetailsScreen = () => {
         }
     };
 
+    // Alterna o estado de sono:
     const letSleep = () => {
         setIsSleep(prev => !prev);
     };
 
+    // Efeito para atualizar atributos a cada 10 segundos:
     useEffect(() => {
         const interval = setInterval(async () => {
-            if (isSleep) {
-                const newSleep = Math.min(currentSleep + 10, 100);
-                setCurrentSleep(newSleep);
-
-                setCurrentHunger(prev => Math.max(prev - 1, 0));
-                setCurrentFun(prev => Math.max(prev - 1, 0));
-
-                const updatedTamagochi = {
-                    id: tamagochiId,
-                    name: name as string,
-                    image: Number(image),
-                    hunger: Math.max(currentHunger - 1, 0),
-                    sleep: newSleep,
-                    fun: Math.max(currentFun - 1, 0),
-                    status: calculateStatus(),
-                };
-                await alterTamagochi(updatedTamagochi);
-
-            } else {
-                setCurrentHunger(prev => Math.max(prev - 1, 0));
-                setCurrentSleep(prev => Math.max(prev - 1, 0));
-                setCurrentFun(prev => Math.max(prev - 1, 0));
-
-                const updatedTamagochi = {
-                    id: tamagochiId,
-                    name: name as string,
-                    image: Number(image),
-                    hunger: Math.max(currentHunger - 1, 0),
-                    sleep: Math.max(currentSleep - 1, 0),
-                    fun: Math.max(currentFun - 1, 0),
-                    status: calculateStatus(),
-                };
-                await alterTamagochi(updatedTamagochi);
-            }
+            const updatedValues = {
+                hunger: Math.max(currentHunger - 1, 0),
+                sleep: isSleep ? Math.min(currentSleep + 10, 100) : Math.max(currentSleep - 1, 0),
+                fun: Math.max(currentFun - 1, 0),
+            };
+    
+            setCurrentHunger(updatedValues.hunger);
+            setCurrentSleep(updatedValues.sleep);
+            setCurrentFun(updatedValues.fun);
+    
+            const updatedTamagochi = {
+                id: tamagochiId,
+                name: name as string,
+                image: Number(image),
+                ...updatedValues,
+                status: calculateStatus(currentHunger, currentSleep, currentFun),
+            };
+    
+            await alterTamagochi(updatedTamagochi);
         }, 10000);
-
+    
         return () => clearInterval(interval);
     }, [isSleep, currentHunger, currentSleep, currentFun]);
 
+    // Função para buscar detalhes do bichinho:
     const fetchTamagochiDetails = useCallback(async () => {
         try {
             const tamagochis = await getTamagochi();
@@ -109,35 +88,48 @@ const DetailsScreen = () => {
         }
     }, [getTamagochi, tamagochiId]);
 
+    // Efeito para carregar detalhes ao montar o componente:
     useEffect(() => {
         fetchTamagochiDetails();
     }, [fetchTamagochiDetails]);
 
+    // Obtém a fonte da imagem do bichinho:
     const imageSource = bichinhoImages.find(img => img.id === Number(image))?.source;
 
     return (
         <SafeAreaView style={[styles.container, isSleep && styles.containerSleep]}>
+            {/*Verificca se o tamagochi esta dormindo ou acordado e ajusta o estilo da página*/}
             <Header title="Detalhes do Bichinho" />
             <View style={styles.content}>
+                {/* Card principal do bichinho: */}
                 <View style={[styles.cardLarge, isSleep && styles.cardSleep]}>
                     <Image source={imageSource} style={styles.image} />
                     <Text style={styles.name}>{name}</Text>
                 </View>
+    
+                {/* Exibição dos atributos do bichinho: */}
                 <View style={[styles.cardSmall, isSleep && styles.cardSleep]}>
                     <Text style={styles.attributeText}>Fome: {currentHunger}</Text>
                     <Text style={styles.attributeText}>Sono: {currentSleep}</Text>
                     <Text style={styles.attributeText}>Diversão: {currentFun}</Text>
-                    <Text style={styles.attributeText}>Status: {calculateStatus()}</Text>
+                    <Text style={styles.attributeText}>Status: {calculateStatus(currentHunger, currentSleep, currentFun)}</Text>
                 </View>
+    
+                {/* Container de botões: */}
                 <View style={styles.buttonsContainer}>
+                    {/* Botão para alimentar o bichinho: */}
                     <TouchableOpacity style={styles.button} onPress={feedPet}>
                         <Ionicons name="fast-food-outline" size={24} color="white" />
                         <Text style={styles.buttonText}>Alimentar</Text>
                     </TouchableOpacity>
+    
+                    {/* Botão para alternar sono: */}
                     <TouchableOpacity style={styles.button} onPress={letSleep}>
                         <MaterialCommunityIcons name="sleep" size={24} color="white" />
                         <Text style={styles.buttonText}>{isSleep ? 'Acordar' : 'Dormir'}</Text>
                     </TouchableOpacity>
+    
+                    {/* Botão para acessar mini jogos: */}
                     <TouchableOpacity
                         style={styles.button}
                         onPress={() => router.push({ pathname: "/MiniGames", params: { tamagochiId: tamagochiId } })}

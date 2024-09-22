@@ -8,7 +8,7 @@ const Header = ({ title }: HeaderProps) => {
 
     const styles = StyleSheet.create({
         headerContainer: {
-            padding: 40,
+            padding: 30,
             backgroundColor: "#F9470B",
             alignItems: "center",
         },
@@ -16,7 +16,7 @@ const Header = ({ title }: HeaderProps) => {
             fontSize: 24,
             fontWeight: "bold",
             paddingBottom: 4,
-            color: "#000"
+            color: "#fff"
         }
     })
 

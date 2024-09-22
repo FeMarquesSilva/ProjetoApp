@@ -13,7 +13,7 @@ const Index = () => {
       setProgress((prevProgress) => {
         // Quando o "progress" estiver em 100, limpamos o intervalo determinamos que o loading finalizou:
         if (prevProgress >= 100) {
-          // Limpa o intervalo quando o carregamento termina;
+          // Limpa o intervalo quando o carregamento termina:
           clearInterval(interval);
           setLoadingComplete(true);
           return 100;
@@ -45,7 +45,7 @@ const Index = () => {
         {/*Colocamos o botçao jogar de forma dinamica, onde enquanto o progresso não estiver completo,
         o play não libera e se mantem com fundo cinza:*/}
         <TouchableOpacity
-          style={[styles.button,{ backgroundColor: loadingComplete ? "#28a745" : "#6c757d" }]}
+          style={[styles.button,{ backgroundColor: loadingComplete ? "#28a745" : "#6c757d" }]}//ternário;
           onPress={start}
           disabled={!loadingComplete}
         >
