@@ -11,7 +11,7 @@ import { todoFunctions, calculateStatus, typeTamagochiList } from '../functions/
 const Index = () => {
   const [ tamagochiList, setTamagochiList] = useState<typeTamagochiList[]>([]);
   const { getTamagochi, alterTamagochi, deleteTamagochiById } = useTodoDatabase();
-  const { bichinhoImages} = todoFunctions(); 
+  const { tamagochiImages} = todoFunctions(); 
 
   // Função para carregar as informações do banco e armazenar no estado:
   const list = async () => {
@@ -64,7 +64,7 @@ const Index = () => {
 
   // Renderiza cada tamagochi da lista:
   const redenItens = ({ item }: { item: typeTamagochiList }) => {
-    const imageSource = bichinhoImages.find((img) => img.id === Number(item.image))?.source;
+    const imageSource = tamagochiImages.find((img) => img.id === Number(item.image))?.source;
     const isDead = item.status === "morto";// Verifica se o Tamagotchi está morto:
 
     // Função para remover o Tamagochi:

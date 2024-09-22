@@ -1,22 +1,14 @@
 export function todoFunctions() {
     // Array de objetos com imagens dos bichinhos:
-    const bichinhoImages = [
+    const tamagochiImages = [
         { id: 1, source: require("@/assets/images/bichinho.png") },
         { id: 2, source: require("@/assets/images/bichinho2.png") },
         { id: 3, source: require("@/assets/images/bichinho3.png") },
         { id: 4, source: require("@/assets/images/bichinho4.png") },
         { id: 5, source: require("@/assets/images/bichinho5.png") },
       ];
-      // Objeto que mapeia IDs às suas respectivas fontes de imagem:
-      const bichinhoImagesByID: { [key: number]: any } = {
-        1: require('@/assets/images/bichinho.png'),
-        2: require('@/assets/images/bichinho2.png'),
-        3: require('@/assets/images/bichinho3.png'),
-        4: require('@/assets/images/bichinho4.png'),
-        5: require('@/assets/images/bichinho5.png'),
-    };
 
-    return { bichinhoImages, bichinhoImagesByID }
+    return { tamagochiImages }
   }
   
   export type typeTamagochiList = {

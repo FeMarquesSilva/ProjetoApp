@@ -8,10 +8,10 @@ import { useTodoDatabase } from "../database/todoService";
 import { todoFunctions, calculateStatus } from '../functions/services';
 
 const DetailsScreen = () => {
-    const { bichinhoImages } = todoFunctions();
+    const { alterTamagochi, getTamagochi } = useTodoDatabase();
+    const { tamagochiImages } = todoFunctions();
     const { id, name, image } = useLocalSearchParams();
     const router = useRouter();
-    const { alterTamagochi, getTamagochi } = useTodoDatabase();
     const tamagochiId = id ? Number(id) : 0;
 
     // Estados para atributos do bichinho
@@ -43,6 +43,7 @@ const DetailsScreen = () => {
 
     // Alterna o estado de sono:
     const letSleep = () => {
+        // Alterna o estado `isSleep` entre verdadeiro e falso
         setIsSleep(prev => !prev);
     };
 
@@ -94,7 +95,7 @@ const DetailsScreen = () => {
     }, [fetchTamagochiDetails]);
 
     // Obtém a fonte da imagem do bichinho:
-    const imageSource = bichinhoImages.find(img => img.id === Number(image))?.source;
+    const imageSource = tamagochiImages.find(img => img.id === Number(image))?.source;
 
     return (
         <SafeAreaView style={[styles.container, isSleep && styles.containerSleep]}>
@@ -144,19 +145,23 @@ const DetailsScreen = () => {
 };
 
 const styles = StyleSheet.create({
+    // Estilos gerais da página:
     container: {
         flex: 1,
         backgroundColor: '#FF8433',
     },
+    // Estilo para quando o bichinho está dormindo:
     containerSleep: {
-        backgroundColor: '#BF6A3D', // Cor laranja escuro quando dormindo
+        backgroundColor: '#BF6A3D', 
     },
+    // Conteúdo centralizado:
     content: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: 20,
     },
+    // Estilo do cartão grande:
     cardLarge: {
         width: '90%',
         backgroundColor: '#FFF',
@@ -166,19 +171,23 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         elevation: 3,
     },
+    // Estilo do cartão quando o bichinho está dormindo:
     cardSleep: {
-        backgroundColor: '#E0E0E0', // Fundo cinza claro quando dormindo
+        backgroundColor: '#E0E0E0', 
     },
+    // Estilo da imagem do bichinho:
     image: {
         width: 200,
         height: 200,
         marginBottom: 15,
     },
+    // Estilo do nome do bichinho:
     name: {
         fontSize: 28,
         fontWeight: 'bold',
         textAlign: 'center',
     },
+    // Estilo do cartão pequeno:
     cardSmall: {
         width: '90%',
         backgroundColor: '#FFF',
@@ -188,16 +197,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         elevation: 3,
     },
+    // Estilo dos textos dos atributos:
     attributeText: {
         fontSize: 18,
         marginVertical: 5,
     },
+    // Contêiner para os botões:
     buttonsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         width: '100%',
         marginTop: 20,
     },
+    // Estilo do botão:
     button: {
         backgroundColor: '#f13601',
         padding: 15,
@@ -205,6 +217,7 @@ const styles = StyleSheet.create({
         width: '30%',
         alignItems: 'center',
     },
+    // Estilo do texto dentro do botão:
     buttonText: {
         color: 'white',
         fontSize: 18,

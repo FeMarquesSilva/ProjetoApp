@@ -9,7 +9,7 @@ type Player = "0" | "X";
 
 const JogoDaVelha = () => {
     const route = useRoute();
-    const { tamagochiId } = route.params as { tamagochiId: string };
+    const { tamagochiId } = route.params as { tamagochiId: number };
     const id = Number(tamagochiId); // Converte o ID do bichinho para número;
 
     const { getTamagochi, alterTamagochi } = useTodoDatabase();

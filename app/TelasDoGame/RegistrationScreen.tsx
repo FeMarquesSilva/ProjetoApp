@@ -8,7 +8,7 @@ import { todoFunctions } from "../functions/services";
 
 const RegistrationScreen = () => {
 
-  const { bichinhoImages } = todoFunctions()
+  const { tamagochiImages } = todoFunctions()
   const [name, setName] = useState<string>('')
   const [image, setImage] = useState<number | null>(null)
   const { saveTamagochi } = useTodoDatabase();
@@ -38,7 +38,7 @@ const RegistrationScreen = () => {
         <Text style={styles.label}>Nome do Bichinho</Text>
         <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Defina um nome para seu bichinho!" />
         <Text style={styles.label}>Selecionar uma Imagem</Text>
-        <FlatList data={bichinhoImages} numColumns={2} renderItem={({ item }) => (
+        <FlatList data={tamagochiImages} numColumns={2} renderItem={({ item }) => (
           <TouchableOpacity style={[styles.imageCard, image === item.id ? styles.selectedImage : null,]}
             onPress={() => setImage(item.id)} >
             <Image source={item.source} style={styles.image} />
