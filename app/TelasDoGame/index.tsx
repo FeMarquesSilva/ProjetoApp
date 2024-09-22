@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image, FlatList, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { router, useFocusEffect } from "expo-router";
 import Header from "@/components/Header";
 import { useTodoDatabase } from "../database/todoService";
@@ -9,9 +10,9 @@ import { todoFunctions, calculateStatus, typeTamagochiList } from '../functions/
 
 //Tela de Listagem:
 const Index = () => {
-  const [ tamagochiList, setTamagochiList] = useState<typeTamagochiList[]>([]);
+  const [tamagochiList, setTamagochiList] = useState<typeTamagochiList[]>([]);
   const { getTamagochi, alterTamagochi, deleteTamagochiById } = useTodoDatabase();
-  const { tamagochiImages} = todoFunctions(); 
+  const { tamagochiImages } = todoFunctions();
 
   // Função para carregar as informações do banco e armazenar no estado:
   const list = async () => {
@@ -97,7 +98,8 @@ const Index = () => {
         onPress={() => {
           if (!isDead) {
             router.push(`/TelasDoGame/detailsScreen?id=${item.id}&name=${item.name}&image=${item.image}&hunger=${item.hunger}&sleep=${item.sleep}&fun=${item.fun}`);
-          }}}
+          }
+        }}
         disabled={isDead}
       >
         <View style={[styles.card, isDead && styles.cardDead]}>
@@ -107,15 +109,17 @@ const Index = () => {
             {isDead ? (<Text style={styles.gameOverText}>Game Over</Text>
             ) : (
               <>
-                <Text>Fome: {item.hunger}</Text>
-                <Text>Sono: {item.sleep}</Text>
-                <Text>Diversão: {item.fun}</Text>
-                <Text>Status: {item.status}</Text>
+                <View style={styles.cardBg}>
+                  <Text>  Fome: {item.hunger}</Text>
+                  <Text>  Sono: {item.sleep}</Text>
+                  <Text>  Diversão: {item.fun}</Text>
+                  <Text>  Status: {item.status}</Text>
+                </View>
               </>
             )}
           </View>
           <TouchableOpacity
-            onPress={() => {deleteTamagochi(item.id)}}
+            onPress={() => { deleteTamagochi(item.id) }}
           >
             <Ionicons name="trash" size={24} color="black" />
           </TouchableOpacity>
@@ -135,9 +139,10 @@ const Index = () => {
       />
       <TouchableOpacity
         style={styles.button}
-        onPress={() => {router.push("/TelasDoGame/registrationScreen")}}
+        onPress={() => { router.push("/TelasDoGame/registrationScreen") }}
       >
-        <Ionicons name="add-outline" size={24} color="black" />
+        <Text style={styles.textButton}>ADICIONAR BICHINHO   </Text>
+        <MaterialIcons name="add-circle" size={24} color="#fff" />
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -159,7 +164,7 @@ const styles = StyleSheet.create({
   card: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#d5bdaf",
     padding: 10,
     marginBottom: 10,
     borderRadius: 10,
@@ -168,6 +173,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 3,
+  },
+  cardBg: {
+    backgroundColor: "#fff",
+    borderRadius: 5,
   },
   // Estilo do cartão quando o bichinho está morto:
   cardDead: {
@@ -189,6 +198,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 5,
+    textAlign: "center",
+    backgroundColor: "#fff",
+    borderRadius: 10,
   },
   // Estilo do texto "Game Over":
   gameOverText: {
@@ -198,12 +210,17 @@ const styles = StyleSheet.create({
   },
   // Estilo do botão de adicionar bichinho:
   button: {
-    flexDirection: "row",
-    backgroundColor: "#f13601",
-    padding: 20,
+    flexDirection: 'row',
+    width: "80%",
+    justifyContent: 'center',
+    marginBottom: 20,
+    backgroundColor: '#ba181b',
     borderRadius: 10,
-    position: "absolute",
-    bottom: 30,
-    right: 20,
+    left: "4.5%",
+    padding: 20,
   },
+  textButton: {
+    color: 'white',
+    fontSize: 18,
+  }
 });
