@@ -117,12 +117,14 @@ const Index = () => {
                 </View>
               </>
             )}
+            <TouchableOpacity
+              onPress={() => { deleteTamagochi(item.id) }}
+              style={styles.buttonTrash}
+            >
+              <Text style={styles.textButton}>DELETAR    </Text> 
+              <Ionicons name="trash" size={24} color="#FFF" />
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            onPress={() => { deleteTamagochi(item.id) }}
-          >
-            <Ionicons name="trash" size={24} color="black" />
-          </TouchableOpacity>
         </View>
       </TouchableOpacity>
     );
@@ -214,10 +216,19 @@ const styles = StyleSheet.create({
     width: "80%",
     justifyContent: 'center',
     marginBottom: 20,
-    backgroundColor: '#ba181b',
+    backgroundColor: '#2c6e49',
     borderRadius: 10,
     left: "4.5%",
-    padding: 20,
+    padding: 25,
+  },
+  buttonTrash: {
+    flexDirection: 'row',
+    width: "100%",
+    justifyContent: 'center',
+    marginTop: 5,
+    backgroundColor: '#ba181b',
+    borderRadius: 10,
+    padding: 5,
   },
   textButton: {
     color: 'white',
