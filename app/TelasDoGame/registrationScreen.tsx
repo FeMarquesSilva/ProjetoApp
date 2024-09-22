@@ -8,24 +8,24 @@ import { todoFunctions } from "../functions/services";
 
 const RegistrationScreen = () => {
 
-  const { tamagochiImages } = todoFunctions()
-  const [name, setName] = useState<string>('')
-  const [image, setImage] = useState<number | null>(null)
-  const { saveTamagochi } = useTodoDatabase();
+  const { tamagochiImages } = todoFunctions() // Pega as imagens disponíveis para o tamagotchi
+  const [name, setName] = useState<string>('') // Estado para armazenar o nome do tamagotchi
+  const [image, setImage] = useState<number | null>(null) // Estado para armazenar a imagem selecionada do tamagotchi
+  const { saveTamagochi } = useTodoDatabase(); // Função para salvar o tamagotchi no banco de dados
 
   const register = async () => {
-    if (name.trim() === '') {
-      alert("Por Favor preencha o nome e selecione um personagem");
+    if (name.trim() === '') { // Verifica se o nome está vazio
+      alert("Por Favor preencha o nome e selecione um personagem"); // Exibe alerta se o nome não for preenchido
       return
     }
-    if (image === null) {
-      alert("Por Favor preencha o nome e selecione um personagem");
+    if (image === null) { // Verifica se uma imagem foi selecionada
+      alert("Por Favor preencha o nome e selecione um personagem"); // Exibe alerta se a imagem não for selecionada
       return
     }
-    try {
-      const res = await saveTamagochi({ name: name, image: image, hunger: 100, sleep: 100, fun: 100, status: 'Muito bem'});
-      router.navigate("/TelasDoGame")
-      alert("Seu novo tamagochi está cadastrado!")
+    try { // Tenta salvar o tamagotchi com os atributos iniciais
+      const res = await saveTamagochi({ name: name, image: image, hunger: 100, sleep: 100, fun: 100, status: 'Muito bem' });
+      router.navigate("/TelasDoGame") // Navega para a tela de listagem de tamagotchis
+      alert("Seu novo tamagochi está cadastrado!") // Exibe alerta de sucesso
     } catch (error) {
       console.error(error)
     }
@@ -44,10 +44,10 @@ const RegistrationScreen = () => {
             <Image source={item.source} style={styles.image} />
           </TouchableOpacity>
         )}
-          keyExtractor={(item) => item.id.toString()}
-          contentContainerStyle={styles.imageList}
+          keyExtractor={(item) => item.id.toString()} // Define a chave única para cada item da lista
+          contentContainerStyle={styles.imageList} // Define o estilo do container da lista de imagens
         />
-        <TouchableOpacity style={styles.buttonAdd} onPress={() => {register()}}>
+        <TouchableOpacity style={styles.buttonAdd} onPress={() => { register() }}>
           <Text style={styles.buttonText}>Cadastrar Bichinho</Text>
         </TouchableOpacity>
       </View>
