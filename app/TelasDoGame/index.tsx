@@ -35,13 +35,11 @@ const Index = () => {
     const atualizarAtributos = async () => {
       try {
         const tamagochis = await getTamagochi();
-        // Mapeamos cada bichinho para atualizar seus atributos
+        // Mapeamos cada bichinho para atualizar seus atributos:
         const updatedTamagochis = tamagochis.map((tamagochi) => {
           const updatedHunger = Math.max(tamagochi.hunger - 1, 0);
           const updatedSleep = Math.max(tamagochi.sleep - 1, 0);
           const updatedFun = Math.max(tamagochi.fun - 1, 0);
-
-          //Defino o status usando a função de calcular status:
           const status = calculateStatus(updatedHunger, updatedSleep, updatedFun)
 
           return {
@@ -53,31 +51,23 @@ const Index = () => {
           };
         });
 
-        await Promise.all(
-          updatedTamagochis.map((tamagochi) => alterTamagochi(tamagochi))
-        );
-
+        await Promise.all(updatedTamagochis.map((tamagochi) => alterTamagochi(tamagochi)));
         setTamagochiList(updatedTamagochis); // Atualiza a lista no estado;
       } catch (error) {
         console.error(error);
       }
     };
 
-    const interval = setInterval(atualizarAtributos, 10000); // 10s
-
+    const interval = setInterval(atualizarAtributos, 10000); // 10s;
     return () => clearInterval(interval);
   }, [getTamagochi, alterTamagochi]);
 
-  // Renderiza cada tamagochi da lista
+  // Renderiza cada tamagochi da lista:
   const renderItem = ({ item }: { item: typeTamagochiList }) => {
-    const imageSource = bichinhoImages.find(
-      (img) => img.id === Number(item.image)
-    )?.source;
+    const imageSource = bichinhoImages.find((img) => img.id === Number(item.image))?.source;
+    const isDead = item.status === "morto";// Verifica se o Tamagotchi está morto:
 
-    // Verifica se o Tamagotchi está morto
-    const isDead = item.status === "morto";
-
-    // Função para remover o Tamagochi
+    // Função para remover o Tamagochi:
     const removeTamagochi = (id: number) => {
       Alert.alert(
         'Confirmar Remoção',//Titulo;
@@ -92,8 +82,7 @@ const Index = () => {
             onPress: async () => {
               try {
                 await deleteTamagochiById({ id });
-                // Atualiza a lista imediatamente após a remoção:
-                setTamagochiList(prev => prev.filter(t => t.id !== id));
+                setTamagochiList(prev => prev.filter(t => t.id !== id));// Atualiza a lista imediatamente após a remoção:
               } catch (error) {
                 console.error('Erro ao remover o Tamagochi:', error);
               }
@@ -157,13 +146,16 @@ const Index = () => {
 export default Index;
 
 const styles = StyleSheet.create({
+  // Estilos gerais da página:
   container: {
     flex: 1,
     backgroundColor: "#FF8433",
   },
+  // Estilos da lista:
   list: {
     padding: 20,
   },
+  // Estilo do cartão para cada bichinho na lista:
   card: {
     flexDirection: "row",
     alignItems: "center",
@@ -177,28 +169,34 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
+  // Estilo do cartão quando o bichinho está morto:
   cardDead: {
     backgroundColor: "#808080",
   },
+  // Estilo da imagem do bichinho:
   image: {
     width: 100,
     height: 100,
     borderRadius: 10,
     marginRight: 10,
   },
+  // Estilos para as informações do bichinho:
   info: {
     flex: 1,
   },
+  // Estilo do nome do bichinho:
   name: {
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 5,
   },
+  // Estilo do texto "Game Over":
   gameOverText: {
     fontSize: 18,
     fontWeight: "bold",
     color: "red",
   },
+  // Estilo do botão de adicionar bichinho:
   button: {
     flexDirection: "row",
     backgroundColor: "#f13601",
