@@ -32,7 +32,7 @@ const Index = () => {
 
   // Atualiza os atributos a cada 10 segundos:
   useEffect(() => {
-    const atualizarAtributos = async () => {
+    const updateStatus = async () => {
       try {
         const tamagochis = await getTamagochi();
         // Mapeamos cada bichinho para atualizar seus atributos:
@@ -58,17 +58,17 @@ const Index = () => {
       }
     };
 
-    const interval = setInterval(atualizarAtributos, 10000); // 10s;
+    const interval = setInterval(updateStatus, 10000); // 10s;
     return () => clearInterval(interval);
   }, [getTamagochi, alterTamagochi]);
 
   // Renderiza cada tamagochi da lista:
-  const renderItem = ({ item }: { item: typeTamagochiList }) => {
+  const redenItens = ({ item }: { item: typeTamagochiList }) => {
     const imageSource = bichinhoImages.find((img) => img.id === Number(item.image))?.source;
     const isDead = item.status === "morto";// Verifica se o Tamagotchi está morto:
 
     // Função para remover o Tamagochi:
-    const removeTamagochi = (id: number) => {
+    const deleteTamagochi = (id: number) => {
       Alert.alert(
         'Confirmar Remoção',//Titulo;
         `Deseja realmente remover o Tamagochi ${item.name} permanentemente?`,//Menssagem;
@@ -115,7 +115,7 @@ const Index = () => {
             )}
           </View>
           <TouchableOpacity
-            onPress={() => {removeTamagochi(item.id)}}
+            onPress={() => {deleteTamagochi(item.id)}}
           >
             <Ionicons name="trash" size={24} color="black" />
           </TouchableOpacity>
@@ -129,7 +129,7 @@ const Index = () => {
       <Header title="LISTAGEM DOS BICHINHOS" />
       <FlatList
         data={tamagochiList}
-        renderItem={renderItem}
+        renderItem={redenItens}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.list}
       />
